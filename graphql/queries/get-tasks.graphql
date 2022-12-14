@@ -1,0 +1,12 @@
+query GetAllTasks {
+  tasks {
+    id
+    title
+    subtitle
+    notes
+    completed
+    createdAt
+    updatedAt
+    authorId
+  }
+}
