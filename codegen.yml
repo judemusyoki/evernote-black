@@ -1,10 +1,33 @@
 schema: http://localhost:3000/api/graphql
-documents: './graphql/**/*.graphql'
+documents: 'graphql/**/*.graphql'
 generates:
-  ./graphql/generated/graphql.ts:
+  ./graphql/generated.ts:
     plugins:
       - typescript
       - typescript-operations
-      - typescript-react-query
-    config:
-      fetcher: graphql-request
+      - typed-document-node
+      - urql-introspection
+      - typescript-urql
+# import type { CodegenConfig } from '@graphql-codegen/cli'
+
+# const config: CodegenConfig = {
+#   overwrite: true,
+#   schema: 'http://localhost:3000/api/graphql',
+#   documents: ['graphql/**/*.graphql'],
+#   generates: {
+#     './graphql/generated/': {
+#       preset: 'client',
+#       plugins: [
+#         'typescript',
+#         'typescript-operations',
+#         'urql-introspection',
+#         'typescript-urql',
+#       ],
+#       config: {
+#         module: 'commonjs',
+#       },
+#     },
+#   },
+# }
+
+# export default config

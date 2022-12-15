@@ -1,8 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useGetAllTasksQuery } from '../graphql/generated'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [result] = useGetAllTasksQuery()
+
+  const { data, error } = result
+
+  if (error) return console.log('ERROR...', error)
+  if (data) return console.log('DATA...', data)
+
   return (
     <div className={styles.container}>
       <Head>
