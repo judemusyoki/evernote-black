@@ -1,15 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useGetAllTasksQuery } from '../graphql/generated'
+
+import { useQuery } from 'urql'
+import { GetAllTasksDocument, GetAllTasksQuery } from '../graphql/generated'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [result] = useGetAllTasksQuery()
+  const [{ data, fetching, error }] = useQuery({
+    query: GetAllTasksDocument,
+  })
 
-  const { data, error } = result
-
+  if (fetching) return <div>Loading</div>
   if (error) return console.log('ERROR...', error)
-  if (data) return console.log('DATA...', data)
+  if (data) return console.log('DATA...', data.tasks[0])
 
   return (
     <div className={styles.container}>
