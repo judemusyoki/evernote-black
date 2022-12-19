@@ -1,0 +1,7 @@
+#import "../fragments/taskDisplay.fragment.graphql"
+
+mutation CreateOneTask($data: TaskCreateInput!) {
+  createOneTask(data: $data) {
+    ...TaskDisplay
+  }
+}

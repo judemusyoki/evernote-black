@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material'
 import React, { FC, useState } from 'react'
-import { Task } from '../graphql/generated'
+import { Task } from '../../graphql/generated'
 
 type TaskInputProps = {
   task?: Task

@@ -1,0 +1,10 @@
+fragment TaskDisplay on Task {
+  id
+  title
+  subtitle
+  notes
+  completed
+  authorId
+  createdAt
+  updatedAt
+}
