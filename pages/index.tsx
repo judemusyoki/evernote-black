@@ -1,4 +1,11 @@
-import { Box, Button, List, ListItemText, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  List,
+  ListItemText,
+  Paper,
+  Typography,
+} from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -44,27 +51,40 @@ export default function Home() {
   // }
 
   return (
-    <Box sx={mainContainer}>
-      <Box sx={listContainer}>
-        <TaskList />
-      </Box>
+    <Box sx={container}>
+      <Paper sx={mainContainer} elevation={8}>
+        <Box sx={listContainer}>
+          <TaskList />
+        </Box>
 
-      {/* <Button variant="contained" color="primary" onClick={addTask}>
+        {/* <Button variant="contained" color="primary" onClick={addTask}>
         CLICK TO CREATER TASK
-      </Button> */}
+        </Button> */}
 
-      <Box sx={listContainer}>
-        <TaskForm />
-      </Box>
+        <Box sx={listContainer}>
+          <TaskForm />
+        </Box>
+      </Paper>
     </Box>
   )
+}
+
+const container = {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: 10,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  width: '50%',
 }
 
 const mainContainer = {
   display: 'flex',
   flexDirection: 'row',
+  width: '100%',
+  padding: 4,
 }
 
 const listContainer = {
-  width: 400,
+  width: '50%',
 }

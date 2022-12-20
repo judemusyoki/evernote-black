@@ -32,6 +32,9 @@ export const TaskItem: FC<TaskItemProps> = ({ task }) => {
           primary={task?.title}
           // onClick={() => selectTask(task.id)}
         />
+        <ListItemIcon>
+          <FlagIcon color={'warning'} />
+        </ListItemIcon>
 
         {/* <ListItemSecondaryAction>
           <ListItemIcon>

@@ -25,5 +25,5 @@ export const TaskList = () => {
 }
 
 const tasksContainer = {
-  width: 300,
+  cursor: 'pointer',
 }

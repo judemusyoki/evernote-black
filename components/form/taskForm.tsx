@@ -43,7 +43,7 @@ export const TaskForm: FC<TaskInputProps> = ({ task }) => {
     }
   }
   return (
-    <Grid container sx={inputContainer}>
+    <Grid container sx={taskFormContainer}>
       <Typography variant={'h5'}>Create Task</Typography>
       <Box m={1}>
         <TextField
@@ -158,7 +158,7 @@ export const TaskForm: FC<TaskInputProps> = ({ task }) => {
   )
 }
 
-const inputContainer = {
+const taskFormContainer = {
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
