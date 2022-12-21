@@ -1,22 +1,27 @@
 import { useEffect, useState } from 'react'
-import { useQuery } from 'urql'
+import { CombinedError, useQuery } from 'urql'
 import {
   GetAllTasksDocument,
   GetAllTasksQueryVariables,
   Task,
 } from '../graphql/generated'
 
-export const useTasks = () => {
-  const [loading, setLoading] = useState<boolean>(true)
+type TasksData = Task[] | undefined
+
+type ErrorData = CombinedError | undefined
+
+type UseTasksResults = {
+  fetching: boolean
+  tasks: TasksData
+  error: ErrorData
+}
+
+export const useTasks = (): UseTasksResults => {
   const [tasks, setTasks] = useState<Task[]>()
 
   const [{ data, fetching, error }] = useQuery<GetAllTasksQueryVariables>({
     query: GetAllTasksDocument,
   })
-
-  useEffect(() => {
-    setLoading(fetching)
-  }, [fetching])
 
   useEffect(() => {
     if (data) {
@@ -25,5 +30,5 @@ export const useTasks = () => {
     }
   }, [data])
 
-  return { loading, tasks }
+  return { fetching, tasks, error }
 }

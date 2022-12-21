@@ -6,11 +6,12 @@ import { useTasks } from '../../lib/useTasks'
 import { TaskItem } from './task'
 
 import { Task } from '../../graphql/generated'
+import { LoadingComponent } from '../../utils/loadingComponent'
 
 export const TaskList = () => {
-  const { loading, tasks } = useTasks()
+  const { fetching: loading, tasks } = useTasks()
 
-  if (!tasks || loading) return <h3>Loading</h3>
+  if (!tasks || loading) return <LoadingComponent />
 
   return (
     <Box sx={tasksContainer}>
