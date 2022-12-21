@@ -1,6 +1,6 @@
 // prisma/seed.ts
 
-  import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { v4 } from 'uuid'
 
 const prisma = new PrismaClient()
@@ -18,7 +18,6 @@ async function main() {
       id: userId1,
       username: 'Luiz',
       createdAt: new Date(),
-      updatedAt: new Date(),
     },
   })
 
@@ -29,14 +28,13 @@ async function main() {
       subtitle: 'Seeded sub something',
       notes: 'Something of notes',
       createdAt: new Date(),
-      updatedAt: new Date(),
-      authorId: userId1
-    }
+      authorId: userId1,
+    },
   })
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e)
     process.exit(1)
   })
@@ -44,31 +42,3 @@ main()
     console.log(`Data seeded...	🌱`)
     await prisma.$disconnect()
   })
-
-// main().then(() => {
-//   console.log(`Data seeded...	🌱`)
-// })
-
-
-// async function m0ain() {
-//   await prisma.user.create({
-//     data: {
-//       email: `testemail@gmail.com`,
-//       role: 'ADMIN',
-//     },
-//   })
-
-//   await prisma.link.createMany({
-//     data: data,
-//   })
-// }
-
-// main()
-//   .catch(e => {
-//     console.error(e)
-//     process.exit(1)
-//   })
-//   .finally(async () => {
-//     console.log(`Data seeded...	🌱`)
-//     await prisma.$disconnect()
-//   })
