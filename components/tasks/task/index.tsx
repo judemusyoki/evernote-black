@@ -11,12 +11,19 @@ import {
 import FlagIcon from '@mui/icons-material/Flag'
 
 import { Task } from '../../../graphql/generated'
+import { useTaskViewContext } from '../../../context'
 
 type TaskItemProps = {
   task: Task
 }
 
 export const TaskItem: FC<TaskItemProps> = ({ task }) => {
+  const { setTaskId } = useTaskViewContext()
+
+  const handleSelectTask = (id: string) => {
+    setTaskId(id)
+  }
+
   return (
     <Box sx={taskItemContainer}>
       <ListItem key={task.id} sx={listItem}>
@@ -30,7 +37,7 @@ export const TaskItem: FC<TaskItemProps> = ({ task }) => {
 
         <ListItemText
           primary={task?.title}
-          // onClick={() => selectTask(task.id)}
+          onClick={() => handleSelectTask(task.id)}
         />
         <ListItemIcon>
           <FlagIcon color={'warning'} />

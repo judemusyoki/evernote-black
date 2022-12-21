@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider as UrqlProvider } from 'urql'
+import TaskViewProvider from '../context'
 
 import { client } from '../lib/graphql'
 
@@ -10,9 +11,7 @@ import createEmotionCache from '../utils/createEmotionCache'
 import lightTheme from '../styles/theme/lightTheme'
 import '../styles/globals.css'
 
-import { FC, useState } from 'react'
-import setTheme from '../styles/theme/lightTheme'
-import { useMediaQuery } from '@mui/material'
+import { FC } from 'react'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 
 const clientSideEmotionCache = createEmotionCache()
@@ -26,12 +25,14 @@ const App: FC<MyAppProps> = (props) => {
 
   return (
     <UrqlProvider value={client}>
-      <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={lightTheme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </CacheProvider>
+      <TaskViewProvider>
+        <CacheProvider value={emotionCache}>
+          <ThemeProvider theme={lightTheme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </CacheProvider>
+      </TaskViewProvider>
     </UrqlProvider>
   )
 }

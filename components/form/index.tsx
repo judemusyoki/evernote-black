@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { Form, Formik, Field, FormikProps } from 'formik'
 import { TextField } from 'formik-mui'
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import { Task } from '../../graphql/generated'
 import { useCreateTask } from '../../lib/useCreateTask'
 import { useUser } from '../../lib/useUser'
