@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CombinedError, useMutation, UseMutationState } from 'urql'
+import { CombinedError, useMutation } from 'urql'
 import { FormValues } from '../components/form/taskForm'
 import {
   CreateOneTaskDocument,

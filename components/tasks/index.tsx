@@ -15,7 +15,7 @@ export const TaskList = () => {
   return (
     <Box sx={tasksContainer}>
       <Typography variant={'h5'}>Your Tasks</Typography>
-      <List dense={true}>
+      <List sx={itemsContainer} dense={true}>
         {tasks?.map((task: Task) => {
           return <TaskItem key={`item-id-${task.id}`} task={task} />
         })}
@@ -26,4 +26,10 @@ export const TaskList = () => {
 
 const tasksContainer = {
   cursor: 'pointer',
+}
+
+const itemsContainer = {
+  height: 250,
+  overflowY: 'scroll',
+  overflowX: 'hidden',
 }
