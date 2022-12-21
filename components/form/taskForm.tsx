@@ -1,9 +1,10 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { Form, Formik, Field, FormikProps } from 'formik'
 import { TextField } from 'formik-mui'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { Task } from '../../graphql/generated'
 import { useCreateTask } from '../../lib/useCreateTask'
+import { useUser } from '../../lib/useUser'
 
 export type FormValues = {
   title: string
@@ -11,30 +12,36 @@ export type FormValues = {
   notes: string
   completed: boolean
   authorId: string
-  createdAt: Date
-  updatedAt: Date
+  updatedAt?: Date
 }
 
 type TaskFormProps = {
   task?: Task
-  // handleToggle?: () => void
 }
 
 export const TaskForm: FC<TaskFormProps> = ({ task }) => {
+  const { user } = useUser({ userId: '2c636d97-51b1-4903-b061-6f966162dfa2' })
   const [createTask] = useCreateTask()
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
 
   const initialValues: FormValues = {
     title: '',
     subtitle: '',
     notes: '',
     completed: false,
-    authorId: 'a035bb44-94c3-49f6-87b8-cd2b003feba2',
-    createdAt: new Date(Date.now()),
-    updatedAt: new Date(Date.now()),
+    authorId: user?.id as string,
+    updatedAt: task && new Date(Date.now()),
   }
 
-  const handleSubmit = async (values: FormValues) => {
-    await createTask(values)
+  const handleSubmit = (values: FormValues, formikBag: { resetForm: any }) => {
+    const { resetForm } = formikBag
+    createTask(values)
+    resetForm()
   }
 
   return (
@@ -56,6 +63,8 @@ export const TaskForm: FC<TaskFormProps> = ({ task }) => {
                 variant="outlined"
                 name="title"
                 required={true}
+                innerRef={() => inputRef}
+                autoFocus={true}
               />
             </Box>
 

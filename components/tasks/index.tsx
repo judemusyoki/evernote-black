@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, List, ListItemText, Typography } from '@mui/material'
+import { Box, List, Typography } from '@mui/material'
 
 import { useTasks } from '../../lib/useTasks'
 import { TaskItem } from './task'
