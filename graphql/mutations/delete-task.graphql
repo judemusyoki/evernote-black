@@ -1,0 +1,7 @@
+#import "../fragments/taskDisplay.fragment.graphql"
+
+mutation DeleteOneTask($taskId: String!) {
+  deleteOneTask(where: { id: $taskId }) {
+    ...TaskDisplay
+  }
+}

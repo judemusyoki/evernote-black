@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { CombinedError, useQuery } from 'urql'
-import { GetUserDocument, User } from '../graphql/generated'
+import {
+  GetUserDocument,
+  GetUserQuery,
+  GetUserQueryVariables,
+  User,
+} from '../graphql/generated'
 
 type UserData = User | undefined
 
@@ -20,14 +25,16 @@ export const useUser = (params: UseUserParams): UseUserResults => {
   const [user, setUser] = useState<User>()
   const { userId } = params
 
-  const [{ data, fetching, error }] = useQuery({
+  const [{ data, fetching, error }] = useQuery<
+    GetUserQuery,
+    GetUserQueryVariables
+  >({
     query: GetUserDocument,
     variables: { userId: userId },
   })
 
   useEffect(() => {
     if (data) {
-      console.log('USER...', data)
       const { user } = data
       setUser(user as User)
     }
