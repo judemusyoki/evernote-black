@@ -6,13 +6,11 @@ import {
   Task,
 } from '../graphql/generated'
 
-type TasksData = Task[] | undefined
-
 type ErrorData = CombinedError | undefined
 
 type UseTasksResults = {
   fetching: boolean
-  tasks: TasksData
+  tasks: Task[] | undefined
   error: ErrorData
 }
 

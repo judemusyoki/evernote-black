@@ -44,6 +44,8 @@ export const TaskForm: FC<TaskFormProps> = ({ task }) => {
     resetForm()
   }
 
+  const formTitle: string = task ? 'Update Task' : 'Create Task'
+
   return (
     <Formik
       initialValues={initialValues}
@@ -53,7 +55,7 @@ export const TaskForm: FC<TaskFormProps> = ({ task }) => {
       {({ resetForm }: FormikProps<FormValues>) => (
         <Grid container sx={taskFormContainer}>
           <Form>
-            <Typography variant={'h5'}>Create Task</Typography>
+            <Typography variant={'h5'}>{formTitle}</Typography>
             <Box m={1}>
               <Field
                 sx={{ width: '100%' }}

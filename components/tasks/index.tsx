@@ -1,36 +1,68 @@
-import React from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import {
+  Box,
+  ListItemButton,
+  Checkbox,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+} from '@mui/material'
 
-import { Box, List, Typography } from '@mui/material'
-
-import { useTasks } from '../../lib/useTasks'
+import { FixedSizeList, ListChildComponentProps } from 'react-window'
+import { Task } from '../../graphql/generated'
 import { TaskItem } from './task'
 
-import { Task } from '../../graphql/generated'
-import { LoadingComponent } from '../../utils/loadingComponent'
+type TaskListProps = {
+  tasks: Task[]
+  setTaskId: Dispatch<SetStateAction<string>>
+}
 
-export const TaskList = () => {
-  const { fetching: loading, tasks } = useTasks()
+export const TaskList: React.FC<TaskListProps> = ({ tasks, setTaskId }) => {
+  const itemCount = tasks?.length
 
-  if (!tasks || loading) return <LoadingComponent />
+  function renderRow(props: ListChildComponentProps) {
+    const { index, style } = props
+    const currentTask = tasks[index + 1]
+
+    const selectTask = (id: string) => {
+      setTaskId(id)
+    }
+
+    if (currentTask) {
+      return (
+        <ListItem style={style} key={index} component="div" disablePadding>
+          <ListItemButton>
+            <TaskItem task={currentTask} selectTask={selectTask} />
+          </ListItemButton>
+        </ListItem>
+      )
+    } else {
+      return <Box>No items listed</Box>
+    }
+  }
 
   return (
-    <Box sx={tasksContainer}>
-      <Typography variant={'h5'}>Your Tasks</Typography>
-      <List sx={itemsContainer} dense={true}>
-        {tasks?.map((task: Task) => {
-          return <TaskItem key={`item-id-${task.id}`} task={task} />
-        })}
-      </List>
+    <Box
+      sx={{
+        width: '100%',
+        height: 400,
+        maxWidth: 360,
+        mt: 1,
+        marginBottom: 6,
+        bgcolor: 'background.paper',
+        cursor: 'pointer',
+      }}
+    >
+      <FixedSizeList
+        height={400}
+        width={360}
+        itemSize={46}
+        itemCount={itemCount}
+        overscanCount={0}
+      >
+        {renderRow}
+      </FixedSizeList>
     </Box>
   )
-}
-
-const tasksContainer = {
-  cursor: 'pointer',
-}
-
-const itemsContainer = {
-  height: 250,
-  overflowY: 'scroll',
-  overflowX: 'hidden',
 }

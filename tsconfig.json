@@ -17,6 +17,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noUnusedLocals": true,
+    "paths": {
+      "baseUrl": ["./"],
+      "@/components/*": ["./components/*"],
+      "@/src/*": ["./src/*"],
+      "@/styles/*": ["./styles/*"]
+  }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"],

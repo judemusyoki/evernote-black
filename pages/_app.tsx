@@ -13,6 +13,7 @@ import '../styles/globals.css'
 
 import { FC } from 'react'
 import { CacheProvider, EmotionCache } from '@emotion/react'
+import { OverallLayout } from '../components/layout/MainNav'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -23,13 +24,16 @@ interface MyAppProps extends AppProps {
 const App: FC<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
+  const getLayout =
+    Component.getLayout ?? ((page) => <OverallLayout>{page}</OverallLayout>)
+
   return (
     <UrqlProvider value={client}>
       <TaskViewProvider>
         <CacheProvider value={emotionCache}>
           <ThemeProvider theme={lightTheme}>
             <CssBaseline />
-            <Component {...pageProps} />
+            {getLayout(<Component {...pageProps} />)}
           </ThemeProvider>
         </CacheProvider>
       </TaskViewProvider>

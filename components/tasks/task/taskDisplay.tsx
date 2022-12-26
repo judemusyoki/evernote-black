@@ -2,24 +2,22 @@ import { Box, IconButton, Paper, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import React, { FC } from 'react'
-import { useTasks } from '../../../lib'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 import { LoadingComponent } from '../../../utils/loadingComponent'
 import { Task } from '../../../graphql/generated'
 import { SetTask } from '../../../context'
 import { useDeleteTask } from '../../../lib/useDeleteTask'
 
 type TaskDisplayProps = {
-  taskId: string
-  setTaskId: SetTask
+  task: Task | undefined
+  setTaskId: Dispatch<SetStateAction<string>>
 }
 
-export const TaskDisplay: FC<TaskDisplayProps> = ({ taskId, setTaskId }) => {
-  const { fetching: loading, tasks } = useTasks()
+export const TaskDisplay: FC<TaskDisplayProps> = ({ task, setTaskId }) => {
   const [deleteTask] = useDeleteTask()
 
   const handleClose = () => {
-    setTaskId(null)
+    setTaskId('')
   }
 
   const handleDelete = (id: string) => {
@@ -27,26 +25,24 @@ export const TaskDisplay: FC<TaskDisplayProps> = ({ taskId, setTaskId }) => {
     handleClose()
   }
 
-  if (!tasks || loading) return <LoadingComponent />
+  if (!task) return <LoadingComponent />
 
-  const currentTask = tasks.find((task: Task) => task.id === taskId)
-
-  return currentTask ? (
+  return task ? (
     <Paper sx={taskItemContainer} elevation={8}>
       <IconButton onClick={handleClose}>
         <CloseIcon />
       </IconButton>
       <Box sx={taskItem} p={3}>
-        <Typography variant="h4">{currentTask.title}</Typography>
-        <Typography variant="subtitle1">{currentTask.subtitle}</Typography>
-        <Typography variant="body2">{currentTask.notes}</Typography>
+        <Typography variant="h4">{task.title}</Typography>
+        <Typography variant="subtitle1">{task.subtitle}</Typography>
+        <Typography variant="body2">{task.notes}</Typography>
       </Box>
 
       <IconButton>
         <EditIcon />
       </IconButton>
 
-      <IconButton onClick={() => handleDelete(currentTask.id)}>
+      <IconButton onClick={() => handleDelete(task.id)}>
         <DeleteIcon />
       </IconButton>
     </Paper>
@@ -56,7 +52,8 @@ export const TaskDisplay: FC<TaskDisplayProps> = ({ taskId, setTaskId }) => {
 }
 
 const taskItemContainer = {
-  borderRadius: 5,
+  minHeight: '50vh',
+  width: '100%',
 }
 
 const taskItem = {

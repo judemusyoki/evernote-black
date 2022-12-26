@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { CombinedError, useMutation } from 'urql'
 import { FormValues } from '../components/form'
@@ -20,6 +21,7 @@ export const useCreateTask = (): [
   const [fetching, setFetching] = useState<boolean>(true)
   const [resultData, setResultData] = useState<TaskCreateInput>()
   const [error, setError] = useState<CombinedError>()
+  const router = useRouter()
 
   const [{ fetching: createFetching, error: createError }, createTask] =
     useMutation<CreateOneTaskMutationVariables>(CreateOneTaskDocument)
@@ -43,6 +45,8 @@ export const useCreateTask = (): [
 
     setFetching(false)
     setResultData(data?.data)
+
+    router.push('/')
 
     return data?.data
   }

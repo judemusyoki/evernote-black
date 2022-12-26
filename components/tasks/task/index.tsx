@@ -15,13 +15,14 @@ import { useTaskViewContext } from '../../../context'
 
 type TaskItemProps = {
   task: Task
+  selectTask: (id: string) => void
 }
 
-export const TaskItem: FC<TaskItemProps> = ({ task }) => {
+export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
   const { setTaskId } = useTaskViewContext()
 
   const handleSelectTask = (id: string) => {
-    setTaskId(id)
+    selectTask(id)
   }
 
   return (

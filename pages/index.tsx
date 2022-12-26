@@ -1,52 +1,42 @@
-import { Box, Paper } from '@mui/material'
-
-import { TaskForm } from '../components/form'
+import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
+import { Box, Divider } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { TaskList } from '../components/tasks'
-import { TaskDisplay } from '../components/tasks/task/taskDisplay'
-import { useTaskViewContext } from '../context'
+import { Task } from '../graphql/generated'
+import { useTasks } from '../lib'
+import { LoadingComponent } from '../utils/loadingComponent'
 
 export default function Home() {
-  const { taskId, setTaskId } = useTaskViewContext()
+  const { fetching: loading, tasks } = useTasks()
+  const [taskId, setTaskId] = useState<string>('')
+  const [displayTask, setDisplayTask] = useState<Task>()
 
-  console.log('context task id', taskId)
+  useEffect(() => {
+    if (taskId && tasks) {
+      const currentTask = tasks.find((task: Task) => task.id === taskId)
+      setDisplayTask(currentTask)
+    } else {
+      setDisplayTask(undefined)
+    }
+  }, [taskId, tasks])
+
+  if (!tasks || loading) return <LoadingComponent />
 
   return (
-    <Box sx={container}>
-      <Paper sx={mainContainer} elevation={8}>
-        <Box sx={listContainer}>
-          <TaskList />
-        </Box>
-
-        {taskId ? (
-          <Box sx={listContainer}>
-            <TaskDisplay taskId={taskId} setTaskId={setTaskId} />
-          </Box>
-        ) : (
-          <Box sx={listContainer}>
-            <TaskForm />
-          </Box>
-        )}
-      </Paper>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+      }}
+    >
+      <TaskList tasks={tasks} setTaskId={setTaskId} />
+      <Divider
+        orientation="vertical"
+        sx={{
+          width: 30,
+        }}
+      />
+      {taskId && <TaskDisplay task={displayTask} setTaskId={setTaskId} />}
     </Box>
   )
-}
-
-const container = {
-  display: 'flex',
-  justifyContent: 'center',
-  marginTop: 10,
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  width: '50%',
-}
-
-const mainContainer = {
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  padding: 4,
-}
-
-const listContainer = {
-  width: '50%',
 }
