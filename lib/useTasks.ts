@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { CombinedError, useQuery } from 'urql'
+
 import {
   GetAllTasksDocument,
   GetAllTasksQueryVariables,
   Task,
-} from '../graphql/generated'
+} from '@/graphql/generated'
 
 type ErrorData = CombinedError | undefined
 

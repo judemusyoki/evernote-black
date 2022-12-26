@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { CombinedError, useQuery } from 'urql'
+
 import {
   GetUserDocument,
   GetUserQuery,
   GetUserQueryVariables,
   User,
-} from '../graphql/generated'
+} from '@/graphql/generated'
 
 type UserData = User | undefined
 

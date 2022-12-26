@@ -1,10 +1,11 @@
+import React, { FC, useEffect, useRef } from 'react'
+
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { Form, Formik, Field, FormikProps } from 'formik'
 import { TextField } from 'formik-mui'
-import React, { FC, useEffect, useRef } from 'react'
-import { Task } from '../../graphql/generated'
-import { useCreateTask } from '../../lib/useCreateTask'
-import { useUser } from '../../lib/useUser'
+
+import { useCreateTask, useUpdateTask, useUser } from '@/lib/index'
+import { Task } from '@/graphql/generated'
 
 export type FormValues = {
   title: string
@@ -12,16 +13,20 @@ export type FormValues = {
   notes: string
   completed: boolean
   authorId: string
+  createdAt?: Date
   updatedAt?: Date
+  id?: string
 }
 
 type TaskFormProps = {
+  onCancel: () => void
   task?: Task
 }
 
-export const TaskForm: FC<TaskFormProps> = ({ task }) => {
+export const TaskForm: FC<TaskFormProps> = ({ task, onCancel }) => {
   const { user } = useUser({ userId: '2c636d97-51b1-4903-b061-6f966162dfa2' })
   const [createTask] = useCreateTask()
+  const [updateTask] = useUpdateTask()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -30,16 +35,27 @@ export const TaskForm: FC<TaskFormProps> = ({ task }) => {
   }, [])
 
   const initialValues: FormValues = {
-    title: '',
-    subtitle: '',
-    notes: '',
-    completed: false,
+    id: task?.id,
+    title: task?.title || '',
+    subtitle: task?.subtitle || '',
+    notes: task?.notes || '',
+    completed: task?.completed || false,
     authorId: user?.id as string,
+    createdAt: task?.createdAt,
     updatedAt: task && new Date(Date.now()),
+  }
+
+  const handleCancel = () => {
+    onCancel()
   }
 
   const handleSubmit = (values: FormValues, formikBag: { resetForm: any }) => {
     const { resetForm } = formikBag
+
+    if (task) {
+      updateTask(values)
+      resetForm()
+    }
     createTask(values)
     resetForm()
   }
@@ -65,7 +81,6 @@ export const TaskForm: FC<TaskFormProps> = ({ task }) => {
                 variant="outlined"
                 name="title"
                 required={true}
-                innerRef={() => inputRef}
                 autoFocus={true}
               />
             </Box>
@@ -100,7 +115,7 @@ export const TaskForm: FC<TaskFormProps> = ({ task }) => {
                 variant="contained"
                 color="primary"
                 type="reset"
-                onClick={() => resetForm}
+                onClick={handleCancel}
               >
                 {'Cancel'}
               </Button>

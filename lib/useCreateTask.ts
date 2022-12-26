@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { CombinedError, useMutation } from 'urql'
-import { FormValues } from '../components/form'
+import { FormValues } from '@/components/form'
 import {
   CreateOneTaskDocument,
   CreateOneTaskMutationVariables,
   TaskCreateInput,
-} from '../graphql/generated'
+} from '@/graphql/generated'
 
 type HandleMethod = (values: FormValues) => Promise<TaskCreateInput | undefined>
 

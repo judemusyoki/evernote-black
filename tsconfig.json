@@ -20,7 +20,11 @@
     "paths": {
       "baseUrl": ["./"],
       "@/components/*": ["./components/*"],
-      "@/src/*": ["./src/*"],
+      "@/context/*": ["./context/*"],
+      "@/graphql/*": ["./graphql/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/prisma/*": ["./prisma/*"],
+      "@/utils/*": ["./utils/*"],
       "@/styles/*": ["./styles/*"]
   }
   },

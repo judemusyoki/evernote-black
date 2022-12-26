@@ -1,10 +1,14 @@
-import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
-import { Box, Divider } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { TaskList } from '../components/tasks'
-import { Task } from '../graphql/generated'
-import { useTasks } from '../lib'
-import { LoadingComponent } from '../utils/loadingComponent'
+
+import { Box, Divider } from '@mui/material'
+
+import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
+import { TaskList } from '@/components/tasks'
+
+import { LoadingComponent } from '@/utils/loadingComponent'
+
+import { Task } from '@/graphql/generated'
+import { useTasks } from '@/lib/index'
 
 export default function Home() {
   const { fetching: loading, tasks } = useTasks()

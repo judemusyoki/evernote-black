@@ -1,12 +1,14 @@
+import React, { Dispatch, FC, SetStateAction } from 'react'
+import { useRouter } from 'next/router'
+
 import { Box, IconButton, Paper, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import React, { Dispatch, FC, SetStateAction } from 'react'
-import { LoadingComponent } from '../../../utils/loadingComponent'
-import { Task } from '../../../graphql/generated'
-import { SetTask } from '../../../context'
-import { useDeleteTask } from '../../../lib/useDeleteTask'
+
+import { LoadingComponent } from '@/utils/loadingComponent'
+import { useDeleteTask } from '@/lib/useDeleteTask'
+import { Task } from '@/graphql/generated'
 
 type TaskDisplayProps = {
   task: Task | undefined
@@ -14,10 +16,20 @@ type TaskDisplayProps = {
 }
 
 export const TaskDisplay: FC<TaskDisplayProps> = ({ task, setTaskId }) => {
+  const router = useRouter()
   const [deleteTask] = useDeleteTask()
 
   const handleClose = () => {
     setTaskId('')
+  }
+
+  const handleUpdate = (id: string) => {
+    router.push({
+      pathname: '/form',
+      query: {
+        taskId: id,
+      },
+    })
   }
 
   const handleDelete = (id: string) => {
@@ -38,7 +50,7 @@ export const TaskDisplay: FC<TaskDisplayProps> = ({ task, setTaskId }) => {
         <Typography variant="body2">{task.notes}</Typography>
       </Box>
 
-      <IconButton>
+      <IconButton onClick={() => handleUpdate(task.id)}>
         <EditIcon />
       </IconButton>
 

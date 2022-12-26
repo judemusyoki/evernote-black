@@ -1,23 +1,27 @@
-import '../styles/globals.css'
+import '@/styles/globals.css'
+import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { Provider as UrqlProvider } from 'urql'
-import TaskViewProvider from '../context'
+import TaskViewProvider from '@/context/index'
 
-import { client } from '../lib/graphql'
+import { client } from '@/lib/graphql'
 
 import { ThemeProvider, CssBaseline } from '@mui/material'
 
-import createEmotionCache from '../utils/createEmotionCache'
-import lightTheme from '../styles/theme/lightTheme'
-import '../styles/globals.css'
+import createEmotionCache from '@/utils/createEmotionCache'
+import lightTheme from '@/styles/theme/lightTheme'
 
-import { FC } from 'react'
+import { FC, ReactElement, ReactNode } from 'react'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import { OverallLayout } from '../components/layout/MainNav'
+import { OverallLayout } from '@/components/layout/MainNav'
 
 const clientSideEmotionCache = createEmotionCache()
 
+export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
 interface MyAppProps extends AppProps {
+  Component: NextPageWithLayout
   emotionCache?: EmotionCache
 }
 

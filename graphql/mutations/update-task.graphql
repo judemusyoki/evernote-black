@@ -1,0 +1,5 @@
+mutation updateOneTask($task: TaskUpdateInput!, $taskId: String!) {
+  updateOneTask(data: $task, where: { id: $taskId }) {
+    ...TaskDisplay
+  }
+}

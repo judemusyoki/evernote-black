@@ -1,16 +1,9 @@
 import { Dispatch, SetStateAction } from 'react'
-import {
-  Box,
-  ListItemButton,
-  Checkbox,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-} from '@mui/material'
-
 import { FixedSizeList, ListChildComponentProps } from 'react-window'
-import { Task } from '../../graphql/generated'
+
+import { Box, ListItemButton, ListItem } from '@mui/material'
+
+import { Task } from '@/graphql/generated'
 import { TaskItem } from './task'
 
 type TaskListProps = {

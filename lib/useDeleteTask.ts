@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { CombinedError, useMutation } from 'urql'
+
 import {
   DeleteOneTaskDocument,
   DeleteOneTaskMutationVariables,
-} from '../graphql/generated'
+} from '@/graphql/generated'
 
 type DeletedId = {
   taskId: string

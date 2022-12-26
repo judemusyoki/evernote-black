@@ -1,3 +1,5 @@
+import { FC } from 'react'
+import { useRouter } from 'next/router'
 import { AddCircleOutlineOutlined, SubjectOutlined } from '@mui/icons-material'
 import {
   AppBar,
@@ -14,17 +16,15 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { useRouter } from 'next/router'
-import { FC } from 'react'
 
 const drawerWidth = 240
 
-type MyRoute = {
-  id: number
-  text: string
-  icon: JSX.Element
-  path: string
-}
+// type MyRoute = {
+//   id: number
+//   text: string
+//   icon: JSX.Element
+//   path: string
+// }
 
 export type LayoutProps = {
   children: React.ReactNode
@@ -34,9 +34,10 @@ export const OverallLayout: FC<LayoutProps> = ({ children }) => {
   const router = useRouter()
   const theme = useTheme()
 
-  const activeRoute = (routeName: MyRoute, currentRoute: MyRoute) => {
-    return routeName === currentRoute ? true : false
-  }
+  // TODO: Fix active menu route styling
+  // const activeRoute = (routeName: MyRoute, currentRoute: MyRoute) => {
+  //   return routeName === currentRoute ? true : false
+  // }
 
   const menuItems = [
     {

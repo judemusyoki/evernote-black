@@ -1,6 +1,23 @@
-import { TaskForm } from '@/components/form'
 import React from 'react'
+import { useRouter } from 'next/router'
+
+import { LoadingComponent } from '@/utils/loadingComponent'
+import { TaskForm } from '@/components/form'
+import { Task } from '@/graphql/generated'
+import { useTasks } from '@/lib/index'
 
 export default function Create() {
-  return <TaskForm />
+  const router = useRouter()
+  const { fetching: loading, tasks } = useTasks()
+
+  const handleCancel = () => {
+    router.push('/')
+  }
+
+  if (!tasks || loading) return <LoadingComponent />
+
+  const taskId = router.query.taskId as string
+  const updateTask = tasks.find((task: Task) => task.id === taskId)
+
+  return <TaskForm task={updateTask} onCancel={handleCancel} />
 }

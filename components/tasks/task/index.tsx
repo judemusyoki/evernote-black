@@ -5,13 +5,12 @@ import {
   Checkbox,
   ListItem,
   ListItemIcon,
-  ListItemSecondaryAction,
+  // ListItemSecondaryAction,
   ListItemText,
 } from '@mui/material'
 import FlagIcon from '@mui/icons-material/Flag'
 
-import { Task } from '../../../graphql/generated'
-import { useTaskViewContext } from '../../../context'
+import { Task } from '@/graphql/generated'
 
 type TaskItemProps = {
   task: Task
@@ -19,8 +18,6 @@ type TaskItemProps = {
 }
 
 export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
-  const { setTaskId } = useTaskViewContext()
-
   const handleSelectTask = (id: string) => {
     selectTask(id)
   }

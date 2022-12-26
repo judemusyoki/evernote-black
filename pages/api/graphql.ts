@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { ApolloServer } from 'apollo-server-micro'
 import { generateSchema } from './generate-schema'
-import { prisma } from '../../prisma'
+import { prisma } from '@/prisma/index'
 
 import Cors from 'micro-cors'
 interface EvernoteGraphQLContext {
