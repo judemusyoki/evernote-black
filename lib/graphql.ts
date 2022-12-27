@@ -1,5 +1,5 @@
 import { createClient } from 'urql'
 
-const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/graphql`
+const url = `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`
 
 export const client = createClient({ url })
