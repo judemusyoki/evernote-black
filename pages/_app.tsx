@@ -1,19 +1,19 @@
-import '@/styles/globals.css'
+import { CacheProvider, EmotionCache } from '@emotion/react'
+import { Provider as UrqlProvider } from 'urql'
+
+import { FC, ReactElement, ReactNode } from 'react'
+
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import { Provider as UrqlProvider } from 'urql'
-import TaskViewProvider from '@/context/index'
-
-import { client } from '@/lib/graphql'
 
 import { ThemeProvider, CssBaseline } from '@mui/material'
 
-import createEmotionCache from '@/utils/createEmotionCache'
-import lightTheme from '@/styles/theme/lightTheme'
-
-import { FC, ReactElement, ReactNode } from 'react'
-import { CacheProvider, EmotionCache } from '@emotion/react'
 import { OverallLayout } from '@/components/layout/MainNav'
+import TaskViewProvider from '@/context/index'
+import { client } from '@/lib/graphql'
+import '@/styles/globals.css'
+import lightTheme from '@/styles/theme/lightTheme'
+import createEmotionCache from '@/utils/createEmotionCache'
 
 const clientSideEmotionCache = createEmotionCache()
 

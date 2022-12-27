@@ -3,7 +3,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, Quicksand;
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif,
+    Quicksand;
 }
 
 code {
@@ -27,20 +28,20 @@ a {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   /* -webkit-border-radius: 10px; */
-  border-radius: 10px; 
+  border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   /* -webkit-border-radius: 10px; */
- border-radius: 10px; 
+  border-radius: 10px;
   background: grey;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-background: grey
+  background: grey;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -53,4 +54,4 @@ background: grey
   }
 }
 
-    @emotion/react @emotion/styled @mui/icons-material @mui/lab @mui/material
+@emotion /react @emotion/styled @mui/icons-material @mui/lab @mui/material;

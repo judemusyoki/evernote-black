@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
 import { CombinedError, useQuery } from 'urql'
+
+import { useEffect, useState } from 'react'
 
 import {
   GetAllTasksDocument,

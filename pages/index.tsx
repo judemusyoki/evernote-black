@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react'
 
 import { Box, Divider } from '@mui/material'
 
-import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
 import { TaskList } from '@/components/tasks'
-
-import { LoadingComponent } from '@/utils/loadingComponent'
-
+import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
 import { Task } from '@/graphql/generated'
 import { useTasks } from '@/lib/index'
+import { LoadingComponent } from '@/utils/loadingComponent'
 
-export default function Home() {
+export const HomePage = () => {
   const { fetching: loading, tasks } = useTasks()
   const [taskId, setTaskId] = useState<string>('')
   const [displayTask, setDisplayTask] = useState<Task>()
@@ -44,3 +42,5 @@ export default function Home() {
     </Box>
   )
 }
+
+export default HomePage

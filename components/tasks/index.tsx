@@ -4,6 +4,7 @@ import { FixedSizeList, ListChildComponentProps } from 'react-window'
 import { Box, ListItemButton, ListItem } from '@mui/material'
 
 import { Task } from '@/graphql/generated'
+
 import { TaskItem } from './task'
 
 type TaskListProps = {

@@ -1,7 +1,7 @@
-import 'reflect-metadata'
-
 import { GraphQLSchema } from 'graphql/type'
 import { buildSchema } from 'type-graphql'
+
+import 'reflect-metadata'
 
 import { resolvers } from '@/prisma/generated/type-graphql'
 

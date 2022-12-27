@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
 import { CombinedError, useMutation } from 'urql'
+
+import { useEffect, useState } from 'react'
 
 import { FormValues } from '@/components/form'
 import {
@@ -8,6 +9,7 @@ import {
   UpdateOneTaskDocument,
   UpdateOneTaskMutationVariables,
 } from '@/graphql/generated'
+
 import { convertDataToSet } from './convertDataToSet'
 
 type HandleMethod = (values: FormValues) => Promise<TaskUpdateInput | undefined>

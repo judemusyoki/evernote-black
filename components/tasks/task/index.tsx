@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 
+import FlagIcon from '@mui/icons-material/Flag'
 import {
   Box,
   Checkbox,
@@ -7,11 +8,10 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import FlagIcon from '@mui/icons-material/Flag'
 
+import { FormValues } from '@/components/form'
 import { Task } from '@/graphql/generated'
 import { useUpdateTask } from '@/lib/index'
-import { FormValues } from '@/components/form'
 
 type TaskItemProps = {
   task: Task

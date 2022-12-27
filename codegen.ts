@@ -1,5 +1,4 @@
 // # from envyaml import EnvYAML
-
 // # schema: "${URL}"/api/graphql
 // # overwrite: true
 // # documents: 'graphql/**/*.graphql'
@@ -9,7 +8,6 @@
 // #       - typescript
 // #       - typescript-operations
 // #       - typed-document-node
-
 import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {

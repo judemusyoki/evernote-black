@@ -1,10 +1,11 @@
 import React from 'react'
+
 import { useRouter } from 'next/router'
 
-import { LoadingComponent } from '@/utils/loadingComponent'
 import { TaskForm } from '@/components/form'
 import { Task } from '@/graphql/generated'
 import { useTasks } from '@/lib/index'
+import { LoadingComponent } from '@/utils/loadingComponent'
 
 export default function Create() {
   const router = useRouter()

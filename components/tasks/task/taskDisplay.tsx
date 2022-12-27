@@ -1,14 +1,15 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
+
 import { useRouter } from 'next/router'
 
-import { Box, IconButton, Paper, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+import { Box, IconButton, Paper, Typography } from '@mui/material'
 
-import { LoadingComponent } from '@/utils/loadingComponent'
-import { useDeleteTask } from '@/lib/useDeleteTask'
 import { Task } from '@/graphql/generated'
+import { useDeleteTask } from '@/lib/useDeleteTask'
+import { LoadingComponent } from '@/utils/loadingComponent'
 
 type TaskDisplayProps = {
   task: Task | undefined
