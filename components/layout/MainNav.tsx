@@ -36,7 +36,7 @@ export const OverallLayout: FC<LayoutProps> = ({ children }) => {
   const router = useRouter()
   const theme = useTheme()
 
-  // TODO: Fix active menu route styling
+  // TODO: Fix active menu route styling some
   // const activeRoute = (routeName: MyRoute, currentRoute: MyRoute) => {
   //   return routeName === currentRoute ? true : false
   // }
