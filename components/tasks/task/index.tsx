@@ -5,12 +5,13 @@ import {
   Checkbox,
   ListItem,
   ListItemIcon,
-  // ListItemSecondaryAction,
   ListItemText,
 } from '@mui/material'
 import FlagIcon from '@mui/icons-material/Flag'
 
 import { Task } from '@/graphql/generated'
+import { useUpdateTask } from '@/lib/index'
+import { FormValues } from '@/components/form'
 
 type TaskItemProps = {
   task: Task
@@ -18,8 +19,15 @@ type TaskItemProps = {
 }
 
 export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
+  const [updateTask] = useUpdateTask()
+
   const handleSelectTask = (id: string) => {
     selectTask(id)
+  }
+
+  const handleToggleTask = () => {
+    task.completed = !task.completed
+    updateTask(task as FormValues)
   }
 
   return (
@@ -28,8 +36,8 @@ export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
         <ListItemIcon sx={listItem}>
           <Checkbox
             edge="end"
-            checked={false}
-            // onClick={() => toggleTask(currentTask?.id)}
+            checked={task.completed}
+            onClick={handleToggleTask}
           />
         </ListItemIcon>
 
@@ -38,14 +46,8 @@ export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
           onClick={() => handleSelectTask(task.id)}
         />
         <ListItemIcon>
-          <FlagIcon color={'warning'} />
+          <FlagIcon color={'disabled'} />
         </ListItemIcon>
-
-        {/* <ListItemSecondaryAction>
-          <ListItemIcon>
-            <FlagIcon color={'disabled'} />
-          </ListItemIcon>
-        </ListItemSecondaryAction> */}
       </ListItem>
     </Box>
   )
