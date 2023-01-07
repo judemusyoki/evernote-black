@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { AggregateTaskArgs } from "./args/AggregateTaskArgs";
 import { CreateManyTaskArgs } from "./args/CreateManyTaskArgs";
 import { CreateOneTaskArgs } from "./args/CreateOneTaskArgs";

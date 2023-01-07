@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { AggregateTaskArgs } from "./args/AggregateTaskArgs";
 import { AggregateTask } from "../../outputs/AggregateTask";
 export declare class AggregateTaskResolver {

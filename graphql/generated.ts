@@ -676,13 +676,13 @@ export enum TaskScalarFieldEnum {
 
 export type TaskScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<TaskScalarWhereWithAggregatesInput>>;
-  NOT?: InputMaybe<Array<TaskScalarWhereWithAggregatesInput>>;
-  OR?: InputMaybe<Array<TaskScalarWhereWithAggregatesInput>>;
   authorId?: InputMaybe<StringWithAggregatesFilter>;
   completed?: InputMaybe<BoolWithAggregatesFilter>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
+  NOT?: InputMaybe<Array<TaskScalarWhereWithAggregatesInput>>;
   notes?: InputMaybe<StringNullableWithAggregatesFilter>;
+  OR?: InputMaybe<Array<TaskScalarWhereWithAggregatesInput>>;
   subtitle?: InputMaybe<StringNullableWithAggregatesFilter>;
   title?: InputMaybe<StringWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
@@ -712,13 +712,13 @@ export type TaskUpdateManyMutationInput = {
 
 export type TaskWhereInput = {
   AND?: InputMaybe<Array<TaskWhereInput>>;
-  NOT?: InputMaybe<Array<TaskWhereInput>>;
-  OR?: InputMaybe<Array<TaskWhereInput>>;
   authorId?: InputMaybe<StringFilter>;
   completed?: InputMaybe<BoolFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
+  NOT?: InputMaybe<Array<TaskWhereInput>>;
   notes?: InputMaybe<StringNullableFilter>;
+  OR?: InputMaybe<Array<TaskWhereInput>>;
   subtitle?: InputMaybe<StringNullableFilter>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
@@ -846,11 +846,11 @@ export enum UserScalarFieldEnum {
 
 export type UserScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
-  NOT?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
-  OR?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   email?: InputMaybe<StringNullableWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
+  NOT?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   username?: InputMaybe<StringWithAggregatesFilter>;
 };
@@ -873,11 +873,11 @@ export type UserUpdateManyMutationInput = {
 
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
-  NOT?: InputMaybe<Array<UserWhereInput>>;
-  OR?: InputMaybe<Array<UserWhereInput>>;
   createdAt?: InputMaybe<DateTimeFilter>;
   email?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
+  NOT?: InputMaybe<Array<UserWhereInput>>;
+  OR?: InputMaybe<Array<UserWhereInput>>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   username?: InputMaybe<StringFilter>;
 };

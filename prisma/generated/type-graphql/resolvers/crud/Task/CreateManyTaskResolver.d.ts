@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { CreateManyTaskArgs } from "./args/CreateManyTaskArgs";
 import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
 export declare class CreateManyTaskResolver {

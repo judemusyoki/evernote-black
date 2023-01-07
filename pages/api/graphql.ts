@@ -1,5 +1,4 @@
-import { ApolloServer } from 'apollo-server-micro'
-import Cors from 'micro-cors'
+import { createYoga } from 'graphql-yoga'
 
 import 'reflect-metadata'
 
@@ -9,6 +8,7 @@ import { generateSchema } from './generate-schema'
 
 interface EvernoteGraphQLContext {
   prisma: typeof prisma
+  // TODO: Add user session
   // session: Session & { user: Partial<User> }
 }
 
@@ -18,20 +18,10 @@ export const config = {
   },
 }
 
-const cors = Cors()
+const schema = await generateSchema()
 
-export default cors(async function handler(req, res) {
-  const schema = await generateSchema()
-
-  const myServer = new ApolloServer({
-    schema,
-    context: (): EvernoteGraphQLContext => ({ prisma }),
-  })
-
-  await prisma.$connect()
-
-  await myServer.start()
-  await myServer.createHandler({
-    path: '/api/graphql',
-  })(req, res)
+export default createYoga({
+  schema,
+  graphqlEndpoint: '/api/graphql',
+  context: (): EvernoteGraphQLContext => ({ prisma }),
 })
