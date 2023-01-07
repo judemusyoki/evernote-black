@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { AggregateUserArgs } from "./args/AggregateUserArgs";
 import { CreateManyUserArgs } from "./args/CreateManyUserArgs";
 import { CreateOneUserArgs } from "./args/CreateOneUserArgs";

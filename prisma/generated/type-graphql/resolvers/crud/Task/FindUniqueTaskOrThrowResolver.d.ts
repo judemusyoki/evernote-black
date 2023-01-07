@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { FindUniqueTaskOrThrowArgs } from "./args/FindUniqueTaskOrThrowArgs";
 import { Task } from "../../../models/Task";
 export declare class FindUniqueTaskOrThrowResolver {

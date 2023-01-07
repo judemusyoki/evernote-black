@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { UpdateOneTaskArgs } from "./args/UpdateOneTaskArgs";
 import { Task } from "../../../models/Task";
 export declare class UpdateOneTaskResolver {
