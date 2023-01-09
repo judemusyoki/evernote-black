@@ -1,4 +1,5 @@
 import { CacheProvider, EmotionCache } from '@emotion/react'
+import { Hydrate, QueryClientProvider } from '@tanstack/react-query'
 import { Provider as UrqlProvider } from 'urql'
 
 import { FC, ReactElement, ReactNode } from 'react'
@@ -11,6 +12,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material'
 import { OverallLayout } from '@/components/layout/MainNav'
 import TaskViewProvider from '@/context/index'
 import { client } from '@/lib/graphql'
+import { queryClient } from '@/lib/reactQueryConfig'
 import '@/styles/globals.css'
 import lightTheme from '@/styles/theme/lightTheme'
 import createEmotionCache from '@/utils/createEmotionCache'
@@ -33,14 +35,18 @@ const App: FC<MyAppProps> = (props) => {
 
   return (
     <UrqlProvider value={client}>
-      <TaskViewProvider>
-        <CacheProvider value={emotionCache}>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </ThemeProvider>
-        </CacheProvider>
-      </TaskViewProvider>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <TaskViewProvider>
+            <CacheProvider value={emotionCache}>
+              <ThemeProvider theme={lightTheme}>
+                <CssBaseline />
+                {getLayout(<Component {...pageProps} />)}
+              </ThemeProvider>
+            </CacheProvider>
+          </TaskViewProvider>
+        </Hydrate>
+      </QueryClientProvider>
     </UrqlProvider>
   )
 }
