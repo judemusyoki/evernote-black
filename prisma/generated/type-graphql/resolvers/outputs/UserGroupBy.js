@@ -28,6 +28,18 @@ tslib_1.__decorate([
 ], UserGroupBy.prototype, "email", void 0);
 tslib_1.__decorate([
     TypeGraphQL.Field(_type => Date, {
+        nullable: true
+    }),
+    tslib_1.__metadata("design:type", Date)
+], UserGroupBy.prototype, "emailVerified", void 0);
+tslib_1.__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    tslib_1.__metadata("design:type", String)
+], UserGroupBy.prototype, "image", void 0);
+tslib_1.__decorate([
+    TypeGraphQL.Field(_type => Date, {
         nullable: false
     }),
     tslib_1.__metadata("design:type", Date)

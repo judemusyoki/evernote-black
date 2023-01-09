@@ -5,6 +5,8 @@ export declare class UserGroupBy {
     id: string;
     username: string;
     email: string | null;
+    emailVerified: Date | null;
+    image: string | null;
     createdAt: Date;
     updatedAt: Date;
     _count: UserCountAggregate | null;

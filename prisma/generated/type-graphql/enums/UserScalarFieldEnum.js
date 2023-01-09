@@ -8,6 +8,8 @@ var UserScalarFieldEnum;
     UserScalarFieldEnum["id"] = "id";
     UserScalarFieldEnum["username"] = "username";
     UserScalarFieldEnum["email"] = "email";
+    UserScalarFieldEnum["emailVerified"] = "emailVerified";
+    UserScalarFieldEnum["image"] = "image";
     UserScalarFieldEnum["createdAt"] = "createdAt";
     UserScalarFieldEnum["updatedAt"] = "updatedAt";
 })(UserScalarFieldEnum = exports.UserScalarFieldEnum || (exports.UserScalarFieldEnum = {}));

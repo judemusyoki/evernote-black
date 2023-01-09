@@ -1,37 +1,27 @@
-import { executeExchange } from '@urql/exchange-execute'
-import {
-  ssrExchange,
-  dedupExchange,
-  cacheExchange,
-  useQuery,
-  Query,
-} from 'urql'
+import { PrismaClient } from '@prisma/client'
 
 import { useEffect, useState } from 'react'
 
-import { withUrqlClient, initUrqlClient } from 'next-urql'
+import { useSession } from 'next-auth/react'
 
 import { Box, Divider } from '@mui/material'
 
 import { TaskList } from '@/components/tasks'
 import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
 import { Task } from '@/graphql/generated'
-import GET_ALL_TASKS from '@/graphql/queries/get-tasks.graphql'
-import { useTasks } from '@/lib/index'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
-import { PrismaClient } from '../prisma'
-import { generateSchema } from './api/generate-schema'
+import { LoginButton } from '../components/login/loginBtn'
 
 const prisma = new PrismaClient()
 
 export const HomePage = (props) => {
   // const { fetching: loading, tasks } = useTasks()
-  const [tasks, setTasks] = useState<Task[]>(JSON.parse(props.tasks))
+  const [tasks, _setTasks] = useState<Task[]>(props.tasks)
   const [taskId, setTaskId] = useState<string>('')
   const [displayTask, setDisplayTask] = useState<Task>()
 
-  console.log('THES SERVERSIDE DATA...', JSON.parse(props.tasks))
+  const { data: session } = useSession()
 
   useEffect(() => {
     if (taskId && tasks) {
@@ -66,8 +56,9 @@ export const HomePage = (props) => {
 export default HomePage
 
 export async function getServerSideProps(ctx) {
+  console.log('CTX...', ctx)
   const fetchedTasks = await prisma.task.findMany()
-  const tasks = JSON.stringify(fetchedTasks)
+  const tasks = JSON.parse(JSON.stringify(fetchedTasks))
 
   return {
     props: {

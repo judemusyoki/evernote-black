@@ -28,6 +28,18 @@ tslib_1.__decorate([
         nullable: true
     }),
     tslib_1.__metadata("design:type", Date)
+], UserMaxAggregate.prototype, "emailVerified", void 0);
+tslib_1.__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    tslib_1.__metadata("design:type", String)
+], UserMaxAggregate.prototype, "image", void 0);
+tslib_1.__decorate([
+    TypeGraphQL.Field(_type => Date, {
+        nullable: true
+    }),
+    tslib_1.__metadata("design:type", Date)
 ], UserMaxAggregate.prototype, "createdAt", void 0);
 tslib_1.__decorate([
     TypeGraphQL.Field(_type => Date, {

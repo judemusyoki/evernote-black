@@ -5,6 +5,7 @@ import { Provider as UrqlProvider } from 'urql'
 import { FC, ReactElement, ReactNode } from 'react'
 
 import { NextPage } from 'next'
+import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 
 import { ThemeProvider, CssBaseline } from '@mui/material'
@@ -34,20 +35,22 @@ const App: FC<MyAppProps> = (props) => {
     Component.getLayout ?? ((page) => <OverallLayout>{page}</OverallLayout>)
 
   return (
-    <UrqlProvider value={client}>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <TaskViewProvider>
-            <CacheProvider value={emotionCache}>
-              <ThemeProvider theme={lightTheme}>
-                <CssBaseline />
-                {getLayout(<Component {...pageProps} />)}
-              </ThemeProvider>
-            </CacheProvider>
-          </TaskViewProvider>
-        </Hydrate>
-      </QueryClientProvider>
-    </UrqlProvider>
+    <SessionProvider session={pageProps.session}>
+      <UrqlProvider value={client}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <TaskViewProvider>
+              <CacheProvider value={emotionCache}>
+                <ThemeProvider theme={lightTheme}>
+                  <CssBaseline />
+                  {getLayout(<Component {...pageProps} />)}
+                </ThemeProvider>
+              </CacheProvider>
+            </TaskViewProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </UrqlProvider>
+    </SessionProvider>
   )
 }
 

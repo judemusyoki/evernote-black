@@ -708,6 +708,16 @@
     lru-cache "^6.0.0"
     tslib "^2.4.0"
 
+"@envelop/response-cache@4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@envelop/response-cache/-/response-cache-4.0.4.tgz#c965de19e19e09b868e6b4089c04a888975662a4"
+  integrity sha512-m8fVw4Yif0Y8TlANDZlA4sXfrEubxV9hHRxJpVqYrqX0YcJZfHS1usF7Z7I2X8LW0x5tyZ9jlbnuf4a26JmHFQ==
+  dependencies:
+    "@graphql-tools/utils" "^8.8.0"
+    fast-json-stable-stringify "^2.1.0"
+    lru-cache "^6.0.0"
+    tslib "^2.4.0"
+
 "@envelop/types@3.0.1":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@envelop/types/-/types-3.0.1.tgz"
@@ -1188,7 +1198,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@graphql-tools/utils@^8.6.5":
+"@graphql-tools/utils@^8.6.5", "@graphql-tools/utils@^8.8.0":
   version "8.13.1"
   resolved "https://registry.npmjs.org/@graphql-tools/utils/-/utils-8.13.1.tgz"
   integrity sha512-qIh9yYpdUFmctVqovwMdheVNJqFh+DQNWIhX87FJStfXYnmweBUDATok9fWPleKeFwxnW8IapKmY8m8toJEkAw==
@@ -1210,6 +1220,13 @@
   version "3.1.1"
   resolved "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.1.1.tgz"
   integrity sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==
+
+"@graphql-yoga/plugin-response-cache@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@graphql-yoga/plugin-response-cache/-/plugin-response-cache-1.3.0.tgz#bf318f5bfd277af2d32f8a25d372002333e97c9e"
+  integrity sha512-rZELVWxOB/EjHPQvOFUkZLwJ8AxPaYd83UhYr4pINe2I235I2YHAZ44O1iL5Xuy/ewDLZHkvxXupcWWXq7rEkw==
+  dependencies:
+    "@envelop/response-cache" "4.0.4"
 
 "@graphql-yoga/subscription@^3.0.0":
   version "3.0.0"
@@ -1407,6 +1424,11 @@
     "@types/react-is" "^16.7.1 || ^17.0.0"
     prop-types "^15.8.1"
     react-is "^18.2.0"
+
+"@next-auth/prisma-adapter@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-1.0.5.tgz#41a2fc7b44907054b81d456b426164e58becf4ed"
+  integrity sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==
 
 "@next/env@13.0.6":
   version "13.0.6"
@@ -1874,6 +1896,11 @@
   version "18.11.15"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.11.15.tgz"
   integrity sha512-VkhBbVo2+2oozlkdHXLrb3zjsRkpdnaU2bXmX8Wgle3PUi569eLRaHGlgETQHR7lLL1w7GiG3h9SnePhxNDecw==
+
+"@types/node@^14.11.2":
+  version "14.18.36"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.36.tgz#c414052cb9d43fab67d679d5f3c641be911f5835"
+  integrity sha512-FXKWbsJ6a1hIrRxv+FoukuHnGTgEzKYGi7kilfMae96AL9UNkPFNWJEEYWzdRI9ooIkbr4AKldyuSTLql06vLQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -3398,7 +3425,7 @@ fast-glob@^3.2.11, fast-glob@^3.2.12, fast-glob@^3.2.9:
     merge2 "^1.3.0"
     micromatch "^4.0.4"
 
-fast-json-stable-stringify@^2.0.0:
+fast-json-stable-stringify@^2.0.0, fast-json-stable-stringify@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz"
   integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
