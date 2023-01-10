@@ -32,6 +32,8 @@ export const HomePage = (props) => {
     }
   }, [taskId, tasks])
 
+  if (!session) return <LoginButton />
+
   if (!tasks) return <LoadingComponent />
 
   return (

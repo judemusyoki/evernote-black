@@ -2,7 +2,7 @@ import { AccountOrderByRelationAggregateInput } from "../inputs/AccountOrderByRe
 import { SessionOrderByRelationAggregateInput } from "../inputs/SessionOrderByRelationAggregateInput";
 export declare class UserOrderByWithRelationInput {
     id?: "asc" | "desc" | undefined;
-    username?: "asc" | "desc" | undefined;
+    name?: "asc" | "desc" | undefined;
     email?: "asc" | "desc" | undefined;
     emailVerified?: "asc" | "desc" | undefined;
     image?: "asc" | "desc" | undefined;

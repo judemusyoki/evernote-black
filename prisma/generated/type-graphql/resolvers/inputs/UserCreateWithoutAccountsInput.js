@@ -14,10 +14,10 @@ tslib_1.__decorate([
 ], UserCreateWithoutAccountsInput.prototype, "id", void 0);
 tslib_1.__decorate([
     TypeGraphQL.Field(_type => String, {
-        nullable: false
+        nullable: true
     }),
     tslib_1.__metadata("design:type", String)
-], UserCreateWithoutAccountsInput.prototype, "username", void 0);
+], UserCreateWithoutAccountsInput.prototype, "name", void 0);
 tslib_1.__decorate([
     TypeGraphQL.Field(_type => String, {
         nullable: true

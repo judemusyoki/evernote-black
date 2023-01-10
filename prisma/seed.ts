@@ -1,5 +1,4 @@
 // prisma/seed.ts
-
 import { PrismaClient } from '@prisma/client'
 import { v4 } from 'uuid'
 
@@ -16,7 +15,9 @@ async function main() {
   await prisma.user.create({
     data: {
       id: userId1,
-      username: 'Luiz',
+      name: 'Jude Musyoki',
+      email: 'judemusyoki@gmail.com',
+      emailVerified: new Date(),
       createdAt: new Date(),
     },
   })

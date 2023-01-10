@@ -14,6 +14,7 @@ const options = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.JWT_SECRET,
 }
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options)

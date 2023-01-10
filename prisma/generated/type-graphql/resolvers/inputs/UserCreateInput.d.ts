@@ -2,7 +2,7 @@ import { AccountCreateNestedManyWithoutUserInput } from "../inputs/AccountCreate
 import { SessionCreateNestedManyWithoutUserInput } from "../inputs/SessionCreateNestedManyWithoutUserInput";
 export declare class UserCreateInput {
     id?: string | undefined;
-    username: string;
+    name?: string | undefined;
     email?: string | undefined;
     emailVerified?: Date | undefined;
     image?: string | undefined;

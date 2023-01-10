@@ -9,7 +9,7 @@ export declare class UserWhereInput {
     OR?: UserWhereInput[] | undefined;
     NOT?: UserWhereInput[] | undefined;
     id?: StringFilter | undefined;
-    username?: StringFilter | undefined;
+    name?: StringNullableFilter | undefined;
     email?: StringNullableFilter | undefined;
     emailVerified?: DateTimeNullableFilter | undefined;
     image?: StringNullableFilter | undefined;

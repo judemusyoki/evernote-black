@@ -5,7 +5,7 @@ import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStri
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 export declare class UserUpdateWithoutSessionsInput {
     id?: StringFieldUpdateOperationsInput | undefined;
-    username?: StringFieldUpdateOperationsInput | undefined;
+    name?: NullableStringFieldUpdateOperationsInput | undefined;
     email?: NullableStringFieldUpdateOperationsInput | undefined;
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | undefined;
     image?: NullableStringFieldUpdateOperationsInput | undefined;

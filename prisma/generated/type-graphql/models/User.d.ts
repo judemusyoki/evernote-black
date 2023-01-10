@@ -3,7 +3,7 @@ import { Session } from "../models/Session";
 import { UserCount } from "../resolvers/outputs/UserCount";
 export declare class User {
     id: string;
-    username: string;
+    name?: string | null;
     email?: string | null;
     emailVerified?: Date | null;
     image?: string | null;

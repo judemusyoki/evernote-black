@@ -6,7 +6,7 @@ const TypeGraphQL = tslib_1.__importStar(require("type-graphql"));
 var UserScalarFieldEnum;
 (function (UserScalarFieldEnum) {
     UserScalarFieldEnum["id"] = "id";
-    UserScalarFieldEnum["username"] = "username";
+    UserScalarFieldEnum["name"] = "name";
     UserScalarFieldEnum["email"] = "email";
     UserScalarFieldEnum["emailVerified"] = "emailVerified";
     UserScalarFieldEnum["image"] = "image";
