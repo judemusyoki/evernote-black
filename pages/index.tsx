@@ -21,7 +21,7 @@ export const HomePage = (props) => {
   const [taskId, setTaskId] = useState<string>('')
   const [displayTask, setDisplayTask] = useState<Task>()
 
-  const { data: session } = useSession()
+  const { status } = useSession()
 
   useEffect(() => {
     if (taskId && tasks) {
@@ -32,9 +32,8 @@ export const HomePage = (props) => {
     }
   }, [taskId, tasks])
 
-  if (!session) return <LoginButton />
-
-  if (!tasks) return <LoadingComponent />
+  if (status === 'loading' || !tasks) return <LoadingComponent />
+  return <LoginButton />
 
   return (
     <Box
@@ -58,7 +57,6 @@ export const HomePage = (props) => {
 export default HomePage
 
 export async function getServerSideProps(ctx) {
-  console.log('CTX...', ctx)
   const fetchedTasks = await prisma.task.findMany()
   const tasks = JSON.parse(JSON.stringify(fetchedTasks))
 

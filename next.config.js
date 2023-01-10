@@ -20,7 +20,6 @@ const nextConfig = {
 
     return config
   },
-  transpileModules: ['graphql-tag'],
 }
 
 module.exports = nextConfig
