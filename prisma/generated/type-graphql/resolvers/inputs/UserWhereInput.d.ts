@@ -1,4 +1,7 @@
+import { AccountListRelationFilter } from "../inputs/AccountListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
+import { DateTimeNullableFilter } from "../inputs/DateTimeNullableFilter";
+import { SessionListRelationFilter } from "../inputs/SessionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
 export declare class UserWhereInput {
@@ -6,8 +9,12 @@ export declare class UserWhereInput {
     OR?: UserWhereInput[] | undefined;
     NOT?: UserWhereInput[] | undefined;
     id?: StringFilter | undefined;
-    username?: StringFilter | undefined;
+    name?: StringNullableFilter | undefined;
     email?: StringNullableFilter | undefined;
+    emailVerified?: DateTimeNullableFilter | undefined;
+    image?: StringNullableFilter | undefined;
+    accounts?: AccountListRelationFilter | undefined;
+    sessions?: SessionListRelationFilter | undefined;
     createdAt?: DateTimeFilter | undefined;
     updatedAt?: DateTimeFilter | undefined;
 }

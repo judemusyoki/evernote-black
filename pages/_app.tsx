@@ -1,3 +1,4 @@
+import { ApolloProvider } from '@apollo/client'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import { Provider as UrqlProvider } from 'urql'
 
@@ -14,6 +15,8 @@ import { client } from '@/lib/graphql'
 import '@/styles/globals.css'
 import lightTheme from '@/styles/theme/lightTheme'
 import createEmotionCache from '@/utils/createEmotionCache'
+
+import apolloClient from '../lib/apollo'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -33,14 +36,16 @@ const App: FC<MyAppProps> = (props) => {
 
   return (
     <UrqlProvider value={client}>
-      <TaskViewProvider>
-        <CacheProvider value={emotionCache}>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </ThemeProvider>
-        </CacheProvider>
-      </TaskViewProvider>
+      <ApolloProvider client={apolloClient}>
+        <TaskViewProvider>
+          <CacheProvider value={emotionCache}>
+            <ThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </ThemeProvider>
+          </CacheProvider>
+        </TaskViewProvider>
+      </ApolloProvider>
     </UrqlProvider>
   )
 }

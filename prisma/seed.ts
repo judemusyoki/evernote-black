@@ -1,11 +1,9 @@
 // prisma/seed.ts
-
 import { PrismaClient } from '@prisma/client'
-import { v4 } from 'uuid'
 
 const prisma = new PrismaClient()
 
-const userId1 = v4()
+// const userId1 = v4()
 
 async function main() {
   // Delete all `User` and `Task` records
@@ -15,22 +13,20 @@ async function main() {
   // (Re-)Create dummy `User` and `Task` records
   await prisma.user.create({
     data: {
-      id: userId1,
-      username: 'Luiz',
-      createdAt: new Date(),
+      email: 'testdean@supernatural.com',
     },
   })
 
-  await prisma.task.create({
-    data: {
-      id: v4(),
-      title: 'Seeded task 1',
-      subtitle: 'Seeded sub something',
-      notes: 'Something of notes',
-      createdAt: new Date(),
-      authorId: userId1,
-    },
-  })
+  // await prisma.task.create({
+  //   data: {
+  //     id: v4(),
+  //     title: 'Seeded task 1',
+  //     subtitle: 'Seeded sub something',
+  //     notes: 'Something of notes',
+  //     createdAt: new Date(),
+  //     authorId: userId1,
+  //   },
+  // })
 }
 
 main()

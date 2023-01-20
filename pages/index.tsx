@@ -5,6 +5,7 @@ import { Box, Divider } from '@mui/material'
 import { TaskList } from '@/components/tasks'
 import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
 import { Task } from '@/graphql/generated'
+import ShowTasks from '@/lib/hooks/useTasks2'
 import { useTasks } from '@/lib/index'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
@@ -31,6 +32,7 @@ export const HomePage = () => {
         flexDirection: 'row',
       }}
     >
+      <ShowTasks />
       <TaskList tasks={tasks} setTaskId={setTaskId} />
       <Divider
         orientation="vertical"
