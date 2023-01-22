@@ -11,14 +11,14 @@ import { Task } from '@/graphql/generated'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
 export type FormValues = {
-  title: string
-  subtitle: string
-  notes: string
+  title: String
+  subtitle: String
+  notes: String
   completed: Boolean
-  authorId: string
-  createdAt?: Date
-  updatedAt?: Date
-  id?: string
+  authorId: String
+  createdAt?: String
+  updatedAt?: String
+  id?: String
 }
 
 type TaskFormProps = {
@@ -28,15 +28,15 @@ type TaskFormProps = {
 }
 
 const CreateTaskMutation = gql`
-  mutation createLink(
+  mutation createTask(
     $title: String!
-    $subtitle: String!
-    $notes: String!
-    $completed: Boolean!
+    $subtitle: String
+    $notes: String
+    $completed: Boolean
     $authorId: String!
-    $updatedAt: Date
+    $updatedAt: DateTime
   ) {
-    createLink(
+    createTask(
       title: $title
       subtitle: $subtitle
       notes: $notes
@@ -69,7 +69,9 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
   })
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    data.authorId = user.id
     const { title, subtitle, notes, completed, authorId, updatedAt } = data
+
     const variables = { title, subtitle, notes, completed, authorId, updatedAt }
 
     console.log('FORM DATA...', data)

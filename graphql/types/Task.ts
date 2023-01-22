@@ -33,7 +33,7 @@ builder.mutationField('createTask', (t) =>
       title: t.arg.string({ required: true }),
       subtitle: t.arg.string({ required: false }),
       notes: t.arg.string({ required: false }),
-      completed: t.arg.boolean({ required: true }),
+      completed: t.arg.boolean({ required: false }),
       createdAt: t.arg({ type: 'DateTime', required: false }),
       updatedAt: t.arg({ type: 'DateTime', required: false }),
       authorId: t.arg.string({ required: true }),

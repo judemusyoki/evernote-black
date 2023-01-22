@@ -11,7 +11,6 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 
 import { OverallLayout } from '@/components/layout'
-import TaskViewProvider from '@/context/index'
 import { client } from '@/lib/graphql'
 import '@/styles/globals.css'
 import lightTheme from '@/styles/theme/lightTheme'
