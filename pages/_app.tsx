@@ -1,4 +1,5 @@
 import { ApolloProvider } from '@apollo/client'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import { Provider as UrqlProvider } from 'urql'
 
@@ -9,7 +10,7 @@ import type { AppProps } from 'next/app'
 
 import { ThemeProvider, CssBaseline } from '@mui/material'
 
-import { OverallLayout } from '@/components/layout/MainNav'
+import { OverallLayout } from '@/components/layout'
 import TaskViewProvider from '@/context/index'
 import { client } from '@/lib/graphql'
 import '@/styles/globals.css'
@@ -36,16 +37,18 @@ const App: FC<MyAppProps> = (props) => {
 
   return (
     <UrqlProvider value={client}>
-      <ApolloProvider client={apolloClient}>
-        <TaskViewProvider>
-          <CacheProvider value={emotionCache}>
-            <ThemeProvider theme={lightTheme}>
-              <CssBaseline />
-              {getLayout(<Component {...pageProps} />)}
-            </ThemeProvider>
-          </CacheProvider>
-        </TaskViewProvider>
-      </ApolloProvider>
+      <UserProvider>
+        <ApolloProvider client={apolloClient}>
+          <TaskViewProvider>
+            <CacheProvider value={emotionCache}>
+              <ThemeProvider theme={lightTheme}>
+                <CssBaseline />
+                {getLayout(<Component {...pageProps} />)}
+              </ThemeProvider>
+            </CacheProvider>
+          </TaskViewProvider>
+        </ApolloProvider>
+      </UserProvider>
     </UrqlProvider>
   )
 }

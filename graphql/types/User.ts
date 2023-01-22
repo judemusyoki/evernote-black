@@ -1,11 +1,8 @@
-import { prisma } from '@/prisma/index'
-
 import { builder } from '../builder'
 
 builder.prismaObject('User', {
   fields: (t) => ({
     id: t.exposeID('id'),
-    name: t.exposeString('name', { nullable: true }),
     email: t.exposeString('email', { nullable: true }),
     image: t.exposeString('image', { nullable: true }),
     createdAt: t.expose('createdAt', { type: 'DateTime' }),
