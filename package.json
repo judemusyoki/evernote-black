@@ -34,8 +34,6 @@
     "class-validator": "^0.14.0",
     "dotenv-cli": "^6.0.0",
     "eslint-config-next": "13.0.6",
-    "formik": "^2.2.9",
-    "formik-mui": "^5.0.0-alpha.0",
     "graphql": "^16.6.0",
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.20.1",

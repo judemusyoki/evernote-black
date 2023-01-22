@@ -32,9 +32,8 @@ const CreateTaskMutation = gql`
     $title: String!
     $subtitle: String
     $notes: String
-    $completed: Boolean
+    $completed: Boolean!
     $authorId: String!
-    $updatedAt: DateTime
   ) {
     createTask(
       title: $title
@@ -42,27 +41,19 @@ const CreateTaskMutation = gql`
       notes: $notes
       completed: $completed
       authorId: $authorId
-      updatedAt: $updatedAt
     ) {
       title
       subtitle
       notes
       completed
       authorId
-      updatedAt
     }
   }
 `
 
 export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
   // const { session } = getSession()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    control,
-  } = useForm<FormValues>()
+  const { handleSubmit, reset, control } = useForm<FormValues>()
 
   const [createTask, { loading, error }] = useMutation(CreateTaskMutation, {
     onCompleted: () => reset(),
@@ -70,17 +61,25 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     data.authorId = user.id
-    const { title, subtitle, notes, completed, authorId, updatedAt } = data
+    data.completed = false
+    const { title, subtitle, notes, completed, authorId } = data
 
-    const variables = { title, subtitle, notes, completed, authorId, updatedAt }
+    const variables = { title, subtitle, notes, completed, authorId }
 
-    console.log('FORM DATA...', data)
     try {
-      toast.promise(createTask({ variables }), {
-        loading: 'Creating new note..',
-        success: 'Note successfully created!🎉',
-        error: `Something went wrong 😥 Please try again -  ${error}`,
-      })
+      toast
+        .promise(createTask({ variables }), {
+          loading: 'Creating new note..',
+          success: 'Note successfully created!🎉',
+          error: `Something went wrong 😥 Please try again -  ${error}`,
+        })
+        .finally(() => {
+          reset({
+            title: undefined,
+            subtitle: undefined,
+            notes: undefined,
+          })
+        })
     } catch (error) {
       console.error(error)
     }
@@ -92,51 +91,31 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
     inputRef.current?.focus()
   }, [])
 
-  // const initialValues: FormValues = {
-  //   id: task?.id,
-  //   title: task?.title || '',
-  //   subtitle: task?.subtitle || '',
-  //   notes: task?.notes || '',
-  //   completed: task?.completed || false,
-  //   authorId: user?.id as string,
-  //   createdAt: task?.createdAt,
-  //   updatedAt: task && new Date(Date.now()),
-  // }
+  const initialValues: FormValues = {
+    id: task?.id,
+    title: task?.title || '',
+    subtitle: task?.subtitle || '',
+    notes: task?.notes || '',
+    completed: task?.completed || false,
+    authorId: user?.id,
+  }
 
   const handleCancel = () => {
     onCancel()
   }
 
-  // const handleSubmit2 = (values: FormValues, formikBag: { resetForm: any }) => {
-  //   const { resetForm } = formikBag
-
-  //   if (task) {
-  //     updateTask(values)
-  //     resetForm()
-  //   }
-  //   createTask(values)
-  //   resetForm()
-  // }
-
   const formTitle: string = task ? 'Update Task' : 'Create Task'
 
   return (
     <Grid container sx={taskFormContainer}>
+      <Toaster />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography variant={'h5'}>{formTitle}</Typography>
         <Box m={1}>
-          {/* <TextField
-            sx={{ width: '100%' }}
-            label="What is your task?"
-            size="small"
-            variant="outlined"
-            required={true}
-            autoFocus={true}
-            inputRef={() => register}
-          /> */}
           <Controller
             name={'title'}
             control={control}
+            defaultValue={initialValues.title}
             render={({ field: { onChange, value } }) => (
               <TextField
                 onChange={onChange}
@@ -153,18 +132,10 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
         </Box>
 
         <Box m={1}>
-          {/* <TextField
-            sx={{ width: '100%' }}
-            label="A little subtext never goes too far..."
-            size="small"
-            variant="outlined"
-            name="subtitle"
-            inputRef={() => register}
-          /> */}
-
           <Controller
             name={'subtitle'}
             control={control}
+            defaultValue={initialValues.subtitle}
             render={({ field: { onChange, value } }) => (
               <TextField
                 onChange={onChange}
@@ -179,18 +150,10 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
         </Box>
 
         <Box m={1}>
-          {/* <TextField
-            sx={{ width: '100%' }}
-            placeholder="Feel free to share more details about the task"
-            name="notes"
-            multiline={true}
-            minRows={4}
-            inputRef={() => register}
-          /> */}
-
           <Controller
             name={'subtitle'}
             control={control}
+            defaultValue={initialValues.notes}
             render={({ field: { onChange, value } }) => (
               <TextField
                 onChange={onChange}
