@@ -39,14 +39,12 @@ const App: FC<MyAppProps> = (props) => {
     <UrqlProvider value={client}>
       <UserProvider>
         <ApolloProvider client={apolloClient}>
-          <TaskViewProvider>
-            <CacheProvider value={emotionCache}>
-              <ThemeProvider theme={lightTheme}>
-                <CssBaseline />
-                {getLayout(<Component {...pageProps} />)}
-              </ThemeProvider>
-            </CacheProvider>
-          </TaskViewProvider>
+          <CacheProvider value={emotionCache}>
+            <ThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </ThemeProvider>
+          </CacheProvider>
         </ApolloProvider>
       </UserProvider>
     </UrqlProvider>

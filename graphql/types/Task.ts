@@ -22,3 +22,40 @@ builder.queryField('tasks', (t) =>
       prisma.task.findMany({ ...query }),
   }),
 )
+
+// graphql/types/Link.ts
+// ... code above remains unchanged
+
+builder.mutationField('createTask', (t) =>
+  t.prismaField({
+    type: 'Task',
+    args: {
+      title: t.arg.string({ required: true }),
+      subtitle: t.arg.string({ required: false }),
+      notes: t.arg.string({ required: false }),
+      completed: t.arg.boolean({ required: true }),
+      createdAt: t.arg({ type: 'DateTime', required: false }),
+      updatedAt: t.arg({ type: 'DateTime', required: false }),
+      authorId: t.arg.string({ required: true }),
+    },
+    //@ts-ignore
+    resolve: async (query, _parent, args, ctx) => {
+      const { title, subtitle, notes, completed, authorId } = args
+
+      if (!(await ctx).user) {
+        throw new Error('You have to be logged in to perform this action')
+      }
+
+      return prisma.task.create({
+        ...query,
+        data: {
+          title,
+          subtitle,
+          notes,
+          completed,
+          authorId,
+        },
+      })
+    },
+  }),
+)

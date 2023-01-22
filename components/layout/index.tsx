@@ -54,7 +54,7 @@ export const OverallLayout: FC<LayoutProps> = ({ children }) => {
     {
       text: 'Create Notes',
       icon: <AddCircleOutlineOutlined color="secondary" />,
-      path: '/form',
+      path: '/create',
     },
   ]
 

@@ -1,18 +1,20 @@
-import { Form, Formik, Field, FormikProps } from 'formik'
-import { TextField } from 'formik-mui'
+import { gql, useMutation } from '@apollo/client'
+import { User } from '@prisma/client'
 
 import React, { FC, useEffect, useRef } from 'react'
+import { type SubmitHandler, useForm, Controller } from 'react-hook-form'
+import toast, { Toaster } from 'react-hot-toast'
 
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 
 import { Task } from '@/graphql/generated'
-import { useCreateTask, useUpdateTask, useUser } from '@/lib/index'
+import { LoadingComponent } from '@/utils/loadingComponent'
 
 export type FormValues = {
   title: string
   subtitle: string
   notes: string
-  completed: boolean
+  completed: Boolean
   authorId: string
   createdAt?: Date
   updatedAt?: Date
@@ -20,14 +22,67 @@ export type FormValues = {
 }
 
 type TaskFormProps = {
+  user: User
   onCancel: () => void
   task?: Task
 }
 
-export const TaskForm: FC<TaskFormProps> = ({ task, onCancel }) => {
-  const { user } = useUser({ userId: '2c636d97-51b1-4903-b061-6f966162dfa2' })
-  const [createTask] = useCreateTask()
-  const [updateTask] = useUpdateTask()
+const CreateTaskMutation = gql`
+  mutation createLink(
+    $title: String!
+    $subtitle: String!
+    $notes: String!
+    $completed: Boolean!
+    $authorId: String!
+    $updatedAt: Date
+  ) {
+    createLink(
+      title: $title
+      subtitle: $subtitle
+      notes: $notes
+      completed: $completed
+      authorId: $authorId
+      updatedAt: $updatedAt
+    ) {
+      title
+      subtitle
+      notes
+      completed
+      authorId
+      updatedAt
+    }
+  }
+`
+
+export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
+  // const { session } = getSession()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    control,
+  } = useForm<FormValues>()
+
+  const [createTask, { loading, error }] = useMutation(CreateTaskMutation, {
+    onCompleted: () => reset(),
+  })
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const { title, subtitle, notes, completed, authorId, updatedAt } = data
+    const variables = { title, subtitle, notes, completed, authorId, updatedAt }
+
+    console.log('FORM DATA...', data)
+    try {
+      toast.promise(createTask({ variables }), {
+        loading: 'Creating new note..',
+        success: 'Note successfully created!🎉',
+        error: `Something went wrong 😥 Please try again -  ${error}`,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -35,96 +90,137 @@ export const TaskForm: FC<TaskFormProps> = ({ task, onCancel }) => {
     inputRef.current?.focus()
   }, [])
 
-  const initialValues: FormValues = {
-    id: task?.id,
-    title: task?.title || '',
-    subtitle: task?.subtitle || '',
-    notes: task?.notes || '',
-    completed: task?.completed || false,
-    authorId: user?.id as string,
-    createdAt: task?.createdAt,
-    updatedAt: task && new Date(Date.now()),
-  }
+  // const initialValues: FormValues = {
+  //   id: task?.id,
+  //   title: task?.title || '',
+  //   subtitle: task?.subtitle || '',
+  //   notes: task?.notes || '',
+  //   completed: task?.completed || false,
+  //   authorId: user?.id as string,
+  //   createdAt: task?.createdAt,
+  //   updatedAt: task && new Date(Date.now()),
+  // }
 
   const handleCancel = () => {
     onCancel()
   }
 
-  const handleSubmit = (values: FormValues, formikBag: { resetForm: any }) => {
-    const { resetForm } = formikBag
+  // const handleSubmit2 = (values: FormValues, formikBag: { resetForm: any }) => {
+  //   const { resetForm } = formikBag
 
-    if (task) {
-      updateTask(values)
-      resetForm()
-    }
-    createTask(values)
-    resetForm()
-  }
+  //   if (task) {
+  //     updateTask(values)
+  //     resetForm()
+  //   }
+  //   createTask(values)
+  //   resetForm()
+  // }
 
   const formTitle: string = task ? 'Update Task' : 'Create Task'
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      enableReinitialize
-    >
-      {({ resetForm }: FormikProps<FormValues>) => (
-        <Grid container sx={taskFormContainer}>
-          <Form>
-            <Typography variant={'h5'}>{formTitle}</Typography>
-            <Box m={1}>
-              <Field
+    <Grid container sx={taskFormContainer}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Typography variant={'h5'}>{formTitle}</Typography>
+        <Box m={1}>
+          {/* <TextField
+            sx={{ width: '100%' }}
+            label="What is your task?"
+            size="small"
+            variant="outlined"
+            required={true}
+            autoFocus={true}
+            inputRef={() => register}
+          /> */}
+          <Controller
+            name={'title'}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                onChange={onChange}
+                value={value}
                 sx={{ width: '100%' }}
-                component={TextField}
                 label="What is your task?"
                 size="small"
                 variant="outlined"
-                name="title"
                 required={true}
                 autoFocus={true}
               />
-            </Box>
+            )}
+          />
+        </Box>
 
-            <Box m={1}>
-              <Field
+        <Box m={1}>
+          {/* <TextField
+            sx={{ width: '100%' }}
+            label="A little subtext never goes too far..."
+            size="small"
+            variant="outlined"
+            name="subtitle"
+            inputRef={() => register}
+          /> */}
+
+          <Controller
+            name={'subtitle'}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                onChange={onChange}
+                value={value}
                 sx={{ width: '100%' }}
-                component={TextField}
                 label="A little subtext never goes too far..."
                 size="small"
                 variant="outlined"
-                name="subtitle"
               />
-            </Box>
+            )}
+          />
+        </Box>
 
-            <Box m={1}>
-              <Field
+        <Box m={1}>
+          {/* <TextField
+            sx={{ width: '100%' }}
+            placeholder="Feel free to share more details about the task"
+            name="notes"
+            multiline={true}
+            minRows={4}
+            inputRef={() => register}
+          /> */}
+
+          <Controller
+            name={'subtitle'}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                onChange={onChange}
+                value={value}
                 sx={{ width: '100%' }}
-                component={TextField}
                 placeholder="Feel free to share more details about the task"
                 name="notes"
                 multiline={true}
                 minRows={4}
               />
-            </Box>
-
-            <Box m={1} sx={buttonContainer}>
-              <Button variant="contained" color="primary" type="submit">
-                {task ? 'Update Task' : 'Add Task'}
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                type="reset"
-                onClick={handleCancel}
-              >
-                {'Cancel'}
-              </Button>
-            </Box>
-          </Form>
-        </Grid>
-      )}
-    </Formik>
+            )}
+          />
+        </Box>
+        {loading ? (
+          <LoadingComponent />
+        ) : (
+          <Box m={1} sx={buttonContainer}>
+            <Button variant="contained" color="primary" type="submit">
+              {task ? 'Update Task' : 'Add Task'}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              type="reset"
+              onClick={handleCancel}
+            >
+              {'Cancel'}
+            </Button>
+          </Box>
+        )}
+      </form>
+    </Grid>
   )
 }
 

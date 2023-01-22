@@ -33,3 +33,4 @@ builder.queryType({
 })
 
 builder.addScalarType('DateTime', DateTimeResolver, {})
+builder.mutationType({})
