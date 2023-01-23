@@ -18,10 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await prisma.user.create({
       data: { email },
     })
-    const user2 = await prisma.user.findUnique({
-      where: { email },
-    })
-    console.log('USER 2...', user2)
+
     return res.status(200).json({
       message: `User with email: ${email} has been created successfully!`,
     })

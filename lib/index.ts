@@ -1,5 +1,5 @@
 export * from './graphql'
-export * from './useCreateTask'
+export * from './hooks/useCreateTask'
 export * from './useUpdateTask'
-export * from './useTasks'
+export * from './hooks/useTasks'
 export * from './useUser'

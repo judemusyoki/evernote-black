@@ -57,3 +57,30 @@ builder.mutationField('createTask', (t) =>
     },
   }),
 )
+
+builder.mutationField('deleteTask', (t) =>
+  t.prismaField({
+    type: 'Task',
+    args: {
+      id: t.arg.string({ required: true }),
+      title: t.arg.string({ required: true }),
+      subtitle: t.arg.string({ required: false }),
+      notes: t.arg.string({ required: false }),
+      completed: t.arg.boolean({ required: false }),
+      authorId: t.arg.string({ required: true }),
+    },
+    //@ts-ignore
+    resolve: async (query, _parent, args, ctx) => {
+      const { id } = args
+
+      if (!(await ctx).user) {
+        throw new Error('You have to be logged in to perform this action')
+      }
+
+      return prisma.task.delete({
+        ...query,
+        where: { id },
+      })
+    },
+  }),
+)

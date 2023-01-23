@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import { User } from '@prisma/client'
+import { Task, User } from '@prisma/client'
 
 import React, { FC, useEffect, useRef } from 'react'
 import { type SubmitHandler, useForm, Controller } from 'react-hook-form'
@@ -7,7 +7,6 @@ import toast, { Toaster } from 'react-hot-toast'
 
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 
-import { Task } from '@/graphql/generated'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
 export type FormValues = {
@@ -69,8 +68,8 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
     try {
       toast
         .promise(createTask({ variables }), {
-          loading: 'Creating new note..',
-          success: 'Note successfully created!🎉',
+          loading: 'Creating new task..',
+          success: 'Task successfully created!🎉',
           error: `Something went wrong 😥 Please try again -  ${error}`,
         })
         .finally(() => {
