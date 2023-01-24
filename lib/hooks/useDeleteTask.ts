@@ -1,4 +1,10 @@
-import { ApolloError, gql, useMutation } from '@apollo/client'
+import {
+  ApolloError,
+  gql,
+  Reference,
+  StoreObject,
+  useMutation,
+} from '@apollo/client'
 import { Task } from '@prisma/client'
 
 import { useEffect, useState } from 'react'
@@ -7,27 +13,9 @@ import toast from 'react-hot-toast'
 type HandleMethod = (task: Task) => Promise<void>
 
 const DeleteTaskMutation = gql`
-  mutation deleteTask(
-    $id: String!
-    $title: String!
-    $subtitle: String
-    $notes: String
-    $completed: Boolean
-    $authorId: String!
-  ) {
-    deleteTask(
-      id: $id
-      title: $title
-      subtitle: $subtitle
-      notes: $notes
-      completed: $completed
-      authorId: $authorId
-    ) {
-      title
-      subtitle
-      notes
-      completed
-      authorId
+  mutation deleteTask($id: String!) {
+    deleteTask(id: $id) {
+      id
     }
   }
 `
@@ -42,7 +30,25 @@ export const useDeleteTask = (): [
   const [error, setError] = useState<ApolloError>()
 
   const [deleteTask, { loading: createFetching, error: createError }] =
-    useMutation(DeleteTaskMutation)
+    useMutation(DeleteTaskMutation, {
+      update(cache, mutationResult) {
+        cache.modify({
+          fields: {
+            tasks(existingTaskRefs, { readField }) {
+              return existingTaskRefs.filter(
+                (taskRef: Reference | StoreObject | undefined) => {
+                  return (
+                    mutationResult.data.deleteTask.id !==
+                    readField('id', taskRef)
+                  )
+                },
+              )
+            },
+          },
+        })
+        cache.gc()
+      },
+    })
 
   useEffect(() => {
     if (createFetching) setFetching(createFetching)

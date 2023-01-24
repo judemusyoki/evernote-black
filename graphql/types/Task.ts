@@ -65,11 +65,6 @@ builder.mutationField('deleteTask', (t) =>
     type: 'Task',
     args: {
       id: t.arg.string({ required: true }),
-      title: t.arg.string({ required: true }),
-      subtitle: t.arg.string({ required: false }),
-      notes: t.arg.string({ required: false }),
-      completed: t.arg.boolean({ required: false }),
-      authorId: t.arg.string({ required: true }),
     },
     //@ts-ignore
     resolve: async (query, _parent, args, ctx) => {
