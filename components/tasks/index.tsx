@@ -8,7 +8,7 @@ import { Box, ListItemButton, ListItem } from '@mui/material'
 import { TaskItem } from './task'
 
 type TaskListProps = {
-  tasks: Task[]
+  tasks: Task[] | []
   setTaskId: Dispatch<SetStateAction<string>>
 }
 

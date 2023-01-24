@@ -23,9 +23,6 @@ builder.queryField('tasks', (t) =>
   }),
 )
 
-// graphql/types/Link.ts
-// ... code above remains unchanged
-
 builder.mutationField('createTask', (t) =>
   t.prismaField({
     type: 'Task',
@@ -42,6 +39,11 @@ builder.mutationField('createTask', (t) =>
 
       if (!(await ctx).user) {
         throw new Error('You have to be logged in to perform this action')
+      }
+
+      //@ts-ignore
+      if ((await ctx).user.id !== authorId) {
+        throw new Error('You are not authorise to create this task')
       }
 
       return prisma.task.create({

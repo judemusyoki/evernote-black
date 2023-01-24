@@ -9,16 +9,17 @@ import { Box, Divider } from '@mui/material'
 
 import { TaskList } from '@/components/tasks'
 import { TaskDisplay } from '@/components/tasks/task/taskDisplay'
+import { useTasks } from '@/lib/index'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
 import { prisma } from '../prisma'
 
 export const HomePage = (props: any) => {
-  const { tasks: fetchedTasks, user } = props
+  const { user } = props
+  const { tasks, fetching: fetchingTasks } = useTasks()
 
   const [taskId, setTaskId] = useState<string>('')
   const [displayTask, setDisplayTask] = useState<Task>()
-  const [tasks, _setTasks] = useState<Task[]>(fetchedTasks)
 
   useEffect(() => {
     if (taskId && tasks) {
@@ -29,7 +30,7 @@ export const HomePage = (props: any) => {
     }
   }, [taskId, tasks])
 
-  if (!user || !tasks) return <LoadingComponent />
+  if (!user || fetchingTasks) return <LoadingComponent />
 
   return (
     <Box
@@ -73,13 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   const user = JSON.parse(JSON.stringify(fetchedUser)) as User
 
-  const fetchedTasks = await prisma.task.findMany({
-    where: { authorId: user.id },
-  })
-
-  const tasks = JSON.parse(JSON.stringify(fetchedTasks)) as Task
-
   return {
-    props: { user, tasks },
+    props: { user },
   }
 }

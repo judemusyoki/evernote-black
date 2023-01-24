@@ -1,12 +1,12 @@
-import { gql, useMutation } from '@apollo/client'
 import { Task, User } from '@prisma/client'
 
 import React, { FC, useEffect, useRef } from 'react'
 import { type SubmitHandler, useForm, Controller } from 'react-hook-form'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 
+import { useCreateTask } from '@/lib/index'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
 export type FormValues = {
@@ -26,62 +26,17 @@ type TaskFormProps = {
   task?: Task
 }
 
-const CreateTaskMutation = gql`
-  mutation createTask(
-    $title: String!
-    $subtitle: String
-    $notes: String
-    $completed: Boolean!
-    $authorId: String!
-  ) {
-    createTask(
-      title: $title
-      subtitle: $subtitle
-      notes: $notes
-      completed: $completed
-      authorId: $authorId
-    ) {
-      title
-      subtitle
-      notes
-      completed
-      authorId
-    }
-  }
-`
+export type FormData = {
+  formValues: FormValues
+  user: User
+}
 
 export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
-  // const { session } = getSession()
-  const { handleSubmit, reset, control } = useForm<FormValues>()
-
-  const [createTask, { loading, error }] = useMutation(CreateTaskMutation, {
-    onCompleted: () => reset(),
-  })
+  const [handleCreateTask, { fetching }] = useCreateTask()
+  const { handleSubmit, control } = useForm<FormValues>()
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    data.authorId = user.id
-    data.completed = false
-    const { title, subtitle, notes, completed, authorId } = data
-
-    const variables = { title, subtitle, notes, completed, authorId }
-
-    try {
-      toast
-        .promise(createTask({ variables }), {
-          loading: 'Creating new task..',
-          success: 'Task successfully created!🎉',
-          error: `Something went wrong 😥 Please try again -  ${error}`,
-        })
-        .finally(() => {
-          reset({
-            title: undefined,
-            subtitle: undefined,
-            notes: undefined,
-          })
-        })
-    } catch (error) {
-      console.error(error)
-    }
+    await handleCreateTask(data, user)
   }
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -166,7 +121,8 @@ export const TaskForm: FC<TaskFormProps> = ({ user, task, onCancel }) => {
             )}
           />
         </Box>
-        {loading ? (
+
+        {fetching ? (
           <LoadingComponent />
         ) : (
           <Box m={1} sx={buttonContainer}>
