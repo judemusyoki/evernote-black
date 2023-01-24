@@ -1,17 +1,14 @@
-import { gql, useMutation } from '@apollo/client'
 import { Task } from '@prisma/client'
 
 import React, { Dispatch, FC, SetStateAction } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
-
-import { useRouter } from 'next/router'
+import { Toaster } from 'react-hot-toast'
 
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 // import EditIcon from '@mui/icons-material/Edit'
 import { Box, IconButton, Paper, Typography } from '@mui/material'
 
-import { useDeleteTask } from '@/lib/useDeleteTask'
+import { useDeleteTask } from '@/lib/hooks/useDeleteTask'
 import { LoadingComponent } from '@/utils/loadingComponent'
 
 type TaskDisplayProps = {
@@ -19,42 +16,10 @@ type TaskDisplayProps = {
   setTaskId: Dispatch<SetStateAction<string>>
 }
 
-const DeleteTaskMutation = gql`
-  mutation deleteTask(
-    $id: String!
-    $title: String!
-    $subtitle: String
-    $notes: String
-    $completed: Boolean
-    $authorId: String!
-  ) {
-    deleteTask(
-      id: $id
-      title: $title
-      subtitle: $subtitle
-      notes: $notes
-      completed: $completed
-      authorId: $authorId
-    ) {
-      title
-      subtitle
-      notes
-      completed
-      authorId
-    }
-  }
-`
-
-// mutation DeleteOneTask($taskId: String!) {
-//   deleteOneTask(where: { id: $taskId }) {
-//     ...TaskDisplay
-//   }
-// }
-
 export const TaskDisplay: FC<TaskDisplayProps> = ({ task, setTaskId }) => {
   //const router = useRouter()
   // const [deleteTask] = useDeleteTask()
-  const [deleteTask, { loading, error }] = useMutation(DeleteTaskMutation)
+  const [deleteTask, { fetching }] = useDeleteTask()
 
   const handleClose = () => {
     setTaskId('')
@@ -70,31 +35,10 @@ export const TaskDisplay: FC<TaskDisplayProps> = ({ task, setTaskId }) => {
   // }
 
   const handleDelete = async (task: Task) => {
-    console.log('DELETING ID...', task)
-    const { id, title, subtitle, notes, completed, authorId } = task
-    const variables = {
-      id,
-      title,
-      subtitle,
-      notes,
-      completed,
-      authorId,
-    }
-    console.log('VARIABLES...', variables)
-    try {
-      toast.promise(deleteTask({ variables }), {
-        loading: 'Deleting task..',
-        success: 'Task successfully created!🎉',
-        error: `Something went wrong 😥 Please try again -  ${error}`,
-      })
-    } catch (error) {
-      console.error(error)
-    }
-
-    handleClose()
+    await deleteTask(task).finally(() => handleClose())
   }
 
-  if (!task) return <LoadingComponent />
+  if (!task || fetching) return <LoadingComponent />
 
   return task ? (
     <Paper sx={taskItemContainer} elevation={8}>
