@@ -11,7 +11,7 @@ type UseTasksResults = {
   error: ErrorData
 }
 
-const AllTasksQuery = gql`
+export const GetAllTasksQuery = gql`
   query {
     tasks {
       id
@@ -30,7 +30,7 @@ export const useTasks = (): UseTasksResults => {
   const [fetching, setFetching] = useState<boolean>(true)
   const [error, setError] = useState<ApolloError>()
   const [tasks, setTasks] = useState<Task[]>([])
-  const { data, loading, error: tasksError } = useQuery(AllTasksQuery)
+  const { data, loading, error: tasksError } = useQuery(GetAllTasksQuery)
 
   useEffect(() => {
     if (data) {

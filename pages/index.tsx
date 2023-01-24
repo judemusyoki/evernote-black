@@ -14,7 +14,7 @@ import { LoadingComponent } from '@/utils/loadingComponent'
 
 import { prisma } from '../prisma'
 
-export const HomePage = (props: any) => {
+function HomePage(props: any) {
   const { user } = props
   const { tasks, fetching: fetchingTasks } = useTasks()
 

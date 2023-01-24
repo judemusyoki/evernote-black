@@ -26,11 +26,14 @@ const CreateTaskMutation = gql`
       completed: $completed
       authorId: $authorId
     ) {
+      id
       title
       subtitle
       notes
       completed
       authorId
+      createdAt
+      updatedAt
     }
   }
 `
@@ -46,9 +49,28 @@ export const useCreateTask = (): [
   const { reset } = useForm<FormValues>()
   const [fetching, setFetching] = useState<boolean>(false)
   const [error, setError] = useState<ApolloError>()
+  // Quick safety check - if the new comment is already
+  // present in the cache, we don't need to add it again.
+  // if (existingCommentRefs.some(
+  //   ref => readField('id', ref) === newComment.id
+  // )) {
+  //   return existingCommentRefs;
+  // }
+
+  // return [...existingCommentRefs, newCommentRef];
 
   const [createTask, { loading: createFetching, error: createError }] =
-    useMutation(CreateTaskMutation)
+    useMutation(CreateTaskMutation, {
+      update(cache, mutationResult) {
+        cache.modify({
+          fields: {
+            tasks: (previous, { toReference }) => {
+              return [...previous, toReference(mutationResult.data.createTask)]
+            },
+          },
+        })
+      },
+    })
 
   useEffect(() => {
     if (createFetching) setFetching(createFetching)
