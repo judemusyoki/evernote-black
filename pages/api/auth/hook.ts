@@ -4,7 +4,6 @@ import { prisma } from '../../../prisma'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, secret } = req.body
-  console.log('LOGIN BODY RE...', req.body)
 
   if (req.method !== 'POST') {
     return res.status(403).json({ message: 'Method not allowed' })

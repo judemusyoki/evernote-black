@@ -1,5 +1,5 @@
 import { ApolloError, gql, useMutation } from '@apollo/client'
-import { User } from '@prisma/client'
+import { Task } from '@prisma/client'
 
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -11,17 +11,19 @@ import { FormValues } from '@/components/form'
 
 import { GET_TASKS } from './useTasks'
 
-type HandleMethod = (formValues: FormValues, user: User) => Promise<void>
+type HandleMethod = (updatedTask: Task) => Promise<void>
 
-const CREATE_TASK = gql`
-  mutation createTask(
+const UPDATE_TASK = gql`
+  mutation updateTask(
+    $id: String!
     $title: String!
     $subtitle: String
     $notes: String
     $completed: Boolean!
     $authorId: String!
   ) {
-    createTask(
+    updateTask(
+      id: $id
       title: $title
       subtitle: $subtitle
       notes: $notes
@@ -34,13 +36,11 @@ const CREATE_TASK = gql`
       notes
       completed
       authorId
-      createdAt
-      updatedAt
     }
   }
 `
 
-export const useCreateTask = (): [
+export const useUpdateTask = (): [
   HandleMethod,
   {
     fetching: boolean
@@ -52,37 +52,32 @@ export const useCreateTask = (): [
   const [fetching, setFetching] = useState<boolean>(false)
   const [error, setError] = useState<ApolloError>()
 
-  const [createTask, { loading: createFetching, error: createError }] =
-    useMutation(CREATE_TASK, {
+  const [updateTask, { loading: updateFetching, error: updateError }] =
+    useMutation(UPDATE_TASK, {
       refetchQueries: [{ query: GET_TASKS }],
     })
 
   useEffect(() => {
-    if (createFetching) setFetching(createFetching)
-  }, [createFetching])
+    if (updateFetching) setFetching(updateFetching)
+  }, [updateFetching])
 
   useEffect(() => {
-    if (createError) {
-      setError(createError)
+    if (updateError) {
+      setError(updateError)
       setFetching(false)
     }
-  }, [createError])
+  }, [updateError])
 
-  const handleCreateTask: HandleMethod = async (
-    formValues: FormValues,
-    user: User,
-  ) => {
-    formValues.authorId = user.id
-    formValues.completed = false
-    const { title, subtitle, notes, completed, authorId } = formValues
+  const handleUpdateTask: HandleMethod = async (updatedTask: Task) => {
+    const { id, title, subtitle, notes, completed, authorId } = updatedTask
 
-    const variables = { title, subtitle, notes, completed, authorId }
+    const variables = { id, title, subtitle, notes, completed, authorId }
 
     try {
       toast
-        .promise(createTask({ variables }), {
-          loading: 'Creating new task..',
-          success: 'Task successfully created!🎉',
+        .promise(updateTask({ variables }), {
+          loading: 'Updating task..',
+          success: 'Task successfully updating!🎉',
           error: `Something went wrong 😥 Please try again -  ${error}`,
         })
         .finally(() => {
@@ -98,5 +93,5 @@ export const useCreateTask = (): [
     }
   }
 
-  return [handleCreateTask, { fetching, error }]
+  return [handleUpdateTask, { fetching, error }]
 }

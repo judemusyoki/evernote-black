@@ -60,6 +60,46 @@ builder.mutationField('createTask', (t) =>
   }),
 )
 
+builder.mutationField('updateTask', (t) =>
+  t.prismaField({
+    type: 'Task',
+    args: {
+      id: t.arg.string({ required: true }),
+      title: t.arg.string({ required: true }),
+      subtitle: t.arg.string({ required: false }),
+      notes: t.arg.string({ required: false }),
+      completed: t.arg.boolean({ required: true }),
+      authorId: t.arg.string({ required: true }),
+    },
+    //@ts-ignore
+    resolve: async (query, _parent, args, ctx) => {
+      const { id, title, subtitle, notes, completed, authorId } = args
+
+      if (!(await ctx).user) {
+        throw new Error('You have to be logged in to perform this action')
+      }
+
+      //@ts-ignore
+      if ((await ctx).user.id !== authorId) {
+        throw new Error('You are not authorise to create this task')
+      }
+
+      return prisma.task.update({
+        ...query,
+        where: { id },
+        data: {
+          id,
+          title,
+          subtitle,
+          notes,
+          completed,
+          authorId,
+        },
+      })
+    },
+  }),
+)
+
 builder.mutationField('deleteTask', (t) =>
   t.prismaField({
     type: 'Task',
