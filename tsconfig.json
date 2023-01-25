@@ -8,7 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -26,13 +26,13 @@
       "@/prisma/*": ["./prisma/*"],
       "@/utils/*": ["./utils/*"],
       "@/styles/*": ["./styles/*"]
-  }
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
   // "ts-node": {
-  //    "compilerOptions": {
-  //      "module": "commonjs"
-  //    }
-  //  }
+  //   "compilerOptions": {
+  //     "module": "commonjs"
+  //   }
+  // }
 }

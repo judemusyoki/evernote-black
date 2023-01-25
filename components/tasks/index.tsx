@@ -1,14 +1,14 @@
+import { Task } from '@prisma/client'
+
 import { Dispatch, SetStateAction } from 'react'
 import { FixedSizeList, ListChildComponentProps } from 'react-window'
 
 import { Box, ListItemButton, ListItem } from '@mui/material'
 
-import { Task } from '@/graphql/generated'
-
 import { TaskItem } from './task'
 
 type TaskListProps = {
-  tasks: Task[]
+  tasks: Task[] | []
   setTaskId: Dispatch<SetStateAction<string>>
 }
 
@@ -32,7 +32,7 @@ export const TaskList: React.FC<TaskListProps> = ({ tasks, setTaskId }) => {
         </ListItem>
       )
     } else {
-      return <Box>No items listed</Box>
+      return <></>
     }
   }
 

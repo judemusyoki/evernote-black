@@ -1,7 +1,11 @@
 fragment UserDisplay on User {
   id
-  username
+  name
   email
+  emailVerified
+  image
+  accounts
+  sessions
   createdAt
   updatedAt
 }

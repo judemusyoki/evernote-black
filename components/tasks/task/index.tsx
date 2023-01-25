@@ -1,3 +1,5 @@
+import { Task } from '@prisma/client'
+
 import React, { FC } from 'react'
 
 import FlagIcon from '@mui/icons-material/Flag'
@@ -9,8 +11,6 @@ import {
   ListItemText,
 } from '@mui/material'
 
-import { FormValues } from '@/components/form'
-import { Task } from '@/graphql/generated'
 import { useUpdateTask } from '@/lib/index'
 
 type TaskItemProps = {
@@ -25,9 +25,12 @@ export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
     selectTask(id)
   }
 
-  const handleToggleTask = () => {
-    task.completed = !task.completed
-    updateTask(task as FormValues)
+  const handleToggleTask = async (task: Task) => {
+    const currentTask = {
+      ...task,
+      completed: !task.completed,
+    }
+    await updateTask(currentTask)
   }
 
   return (
@@ -37,7 +40,7 @@ export const TaskItem: FC<TaskItemProps> = ({ task, selectTask }) => {
           <Checkbox
             edge="end"
             checked={task.completed}
-            onClick={handleToggleTask}
+            onClick={() => handleToggleTask(task)}
           />
         </ListItemIcon>
 
