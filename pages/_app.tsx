@@ -1,7 +1,6 @@
 import { ApolloProvider } from '@apollo/client'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import { Provider as UrqlProvider } from 'urql'
 
 import { FC, ReactElement, ReactNode } from 'react'
 
@@ -11,7 +10,6 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 
 import { OverallLayout } from '@/components/layout'
-import { client } from '@/lib/graphql'
 import '@/styles/globals.css'
 import lightTheme from '@/styles/theme/lightTheme'
 import createEmotionCache from '@/utils/createEmotionCache'
@@ -35,18 +33,16 @@ const App: FC<MyAppProps> = (props) => {
     Component.getLayout ?? ((page) => <OverallLayout>{page}</OverallLayout>)
 
   return (
-    <UrqlProvider value={client}>
-      <UserProvider>
-        <ApolloProvider client={apolloClient}>
-          <CacheProvider value={emotionCache}>
-            <ThemeProvider theme={lightTheme}>
-              <CssBaseline />
-              {getLayout(<Component {...pageProps} />)}
-            </ThemeProvider>
-          </CacheProvider>
-        </ApolloProvider>
-      </UserProvider>
-    </UrqlProvider>
+    <UserProvider>
+      <ApolloProvider client={apolloClient}>
+        <CacheProvider value={emotionCache}>
+          <ThemeProvider theme={lightTheme}>
+            <CssBaseline />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
+        </CacheProvider>
+      </ApolloProvider>
+    </UserProvider>
   )
 }
 
