@@ -17,7 +17,7 @@ export const TaskList: React.FC<TaskListProps> = ({ tasks, setTaskId }) => {
 
   function renderRow(props: ListChildComponentProps) {
     const { index, style } = props
-    const currentTask = tasks[index + 1]
+    const currentTask = tasks[index]
 
     const selectTask = (id: string) => {
       setTaskId(id)

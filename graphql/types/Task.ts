@@ -18,8 +18,20 @@ builder.prismaObject('Task', {
 builder.queryField('tasks', (t) =>
   t.prismaField({
     type: ['Task'],
-    resolve: (query, _parent, _args, _ctx, _info) =>
-      prisma.task.findMany({ ...query }),
+    resolve: async (query, _parent, _args, ctx, _info) => {
+      if (!(await ctx).user) {
+        throw new Error('You have to be logged in to view these tasks')
+      }
+
+      //@ts-ignore
+      const loggedInUserId = (await ctx).user.id
+      const fetchedTasks = await prisma.task.findMany({
+        where: { authorId: loggedInUserId },
+        ...query,
+      })
+
+      return fetchedTasks
+    },
   }),
 )
 
